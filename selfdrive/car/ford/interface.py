@@ -20,7 +20,7 @@ class CarInterface(CarInterfaceBase):
   @staticmethod
   def _get_params(ret, candidate, fingerprint, car_fw, experimental_long, docs):
     ret.carName = "ford"
-    ret.dashcamOnly = candidate in {CAR.F_150_MK14}
+    # ret.dashcamOnly = candidate in {CAR.F_150_MK14}
 
     ret.radarUnavailable = True
     ret.steerControlType = car.CarParams.SteerControlType.angle
@@ -62,6 +62,19 @@ class CarInterface(CarInterfaceBase):
       ret.steerRatio = 17.0
       ret.mass = 2000
 
+    elif candidate == CAR.MUSTANG_MACH_E_MK1:
+      ret.wheelbase = 2.984
+      ret.steerRatio = 17.0  # guess
+      ret.mass = 2200
+
+    elif candidate == CAR.F_150_LIGHTNING_MK1:
+      ret.wheelbase = 3.69
+      ret.steerRatio = 17.0
+      ret.mass = 2729
+      ret.longitudinalTuning.kpBP = [0.]
+      ret.longitudinalTuning.kpV = [0.5]
+      ret.longitudinalTuning.kiV = [0.]
+
     elif candidate == CAR.FOCUS_MK4:
       ret.wheelbase = 2.7
       ret.steerRatio = 15.0
@@ -97,7 +110,6 @@ class CarInterface(CarInterfaceBase):
   def _update(self, c):
     ret = self.CS.update(self.cp, self.cp_cam)
     self.CS = self.sp_update_params(self.CS)
-
     buttonEvents = []
 
     for button in self.CS.buttonStates:
