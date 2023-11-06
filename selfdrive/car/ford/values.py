@@ -277,7 +277,7 @@ FW_VERSIONS = {
       b'ML3T-14D049-AK\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
     ],
     (Ecu.fwdCamera, 0x706, None): [
-      b'ML3T-14H102-ABS\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
+      b'ML3T-14H102-ABS\x00\x00\x00\x00\x00\x00\x00\x00\x00',
       b'ML3T-14H102-ABP\x00\x00\x00\x00\x00\x00\x00\x00\x00',
     ],
     (Ecu.engine, 0x7E0, None): [
