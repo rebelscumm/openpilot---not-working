@@ -289,7 +289,7 @@ FW_VERSIONS = {
       b'MJ98-14C204-AXD\x00\x00\x00\x00\x00\x00\x00\x00\x00',
       b'NJ98-14C204-VE\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
     ],
-  }
+  },
   CAR.FOCUS_MK4: {
     (Ecu.eps, 0x730, None): [
       b'JX6C-14D003-AH\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
