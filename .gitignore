@@ -89,3 +89,4 @@ build/
 
 poetry.toml
 Pipfile
+/.vs
