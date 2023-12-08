@@ -1,10 +1,10 @@
 from cereal import car
-from openpilot.selfdrive.car.chrysler.values import RAM_CARS
+from openpilot.selfdrive.car.chrysler.values import RAM_CARS, RAM_HD, ChryslerFlagsSP
 
 GearShifter = car.CarState.GearShifter
 VisualAlert = car.CarControl.HUDControl.VisualAlert
 
-def create_lkas_hud(packer, CP, lkas_active, mads_enabled, hud_alert, hud_count, car_model, auto_high_beam):
+def create_lkas_hud(packer, CP, lkas_active, mads_enabled, hud_alert, hud_count, car_model, auto_high_beam, bus):
   # LKAS_HUD - Controls what lane-keeping icon is displayed
 
   # == Color ==
@@ -50,17 +50,20 @@ def create_lkas_hud(packer, CP, lkas_active, mads_enabled, hud_alert, hud_count,
     values['AUTO_HIGH_BEAM_ON'] = auto_high_beam
     values['LKAS_Disabled'] = 0 if mads_enabled else 1
 
-  return packer.make_can_msg("DAS_6", 0, values)
+  return packer.make_can_msg("DAS_6", bus, values)
 
 
-def create_lkas_command(packer, CP, apply_steer, lkas_control_bit):
+def create_lkas_command(packer, CP, apply_steer, lkas_control_bit, frame, bus):
   # LKAS_COMMAND Lane-keeping signal to turn the wheel
   enabled_val = 2 if CP.carFingerprint in RAM_CARS else 1
   values = {
     "STEERING_TORQUE": apply_steer,
     "LKAS_CONTROL_BIT": enabled_val if lkas_control_bit else 0,
   }
-  return packer.make_can_msg("LKAS_COMMAND", 0, values)
+
+  if CP.spFlags & ChryslerFlagsSP.SP_RAM_HD_S0:
+    values["COUNTER"] = frame % 0x10
+  return packer.make_can_msg("LKAS_COMMAND", bus, values)
 
 
 def create_cruise_buttons(packer, frame, bus, CP, cruise_buttons_msg=None, buttons=0, cancel=False, resume=False):
@@ -86,3 +89,12 @@ def create_lkas_heartbit(packer, mads_enabled, lkas_heartbit):
   values = lkas_heartbit.copy()  # forward what we parsed
   values["LKAS_DISABLED"] = 0 if mads_enabled else 1
   return packer.make_can_msg("LKAS_HEARTBIT", 0, values)
+
+
+def create_speed_spoof(packer, frame, spoof_speed):
+  # Cruise_Control_Buttons Message sent to cancel ACC.
+  values = {
+    "Vehicle_Speed": spoof_speed,
+    "COUNTER": frame % 0x10,
+  }
+  return packer.make_can_msg("ESP_8", 1, values)

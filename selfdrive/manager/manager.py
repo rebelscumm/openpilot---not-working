@@ -86,7 +86,8 @@ def manager_init() -> None:
     ("ReverseAccChange", "0"),
     ("ScreenRecorder", "1"),
     ("ShowDebugUI", "1"),
-    ("SpeedLimitControl", "1"),
+    ("SpeedLimitControlPolicy", "3"),
+    ("SpeedLimitEngageType", "0"),
     ("SpeedLimitValueOffset", "0"),
     ("SpeedLimitOffsetType", "0"),
     ("StandStillTimer", "0"),
@@ -99,6 +100,9 @@ def manager_init() -> None:
     ("TurnVisionControl", "0"),
     ("VisionCurveLaneless", "0"),
     ("VwAccType", "0"),
+    ("OsmDbUpdatesCheck", "0"),
+    ("OsmDownloadedDate", "0"),
+    ("OSMDownloadProgress", "{}"),
   ]
   if not PC:
     default_params.append(("LastUpdateTime", datetime.datetime.utcnow().isoformat().encode('utf8')))

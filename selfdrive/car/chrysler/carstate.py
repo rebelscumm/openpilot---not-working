@@ -3,7 +3,7 @@ from openpilot.common.conversions import Conversions as CV
 from opendbc.can.parser import CANParser
 from opendbc.can.can_define import CANDefine
 from openpilot.selfdrive.car.interfaces import CarStateBase
-from openpilot.selfdrive.car.chrysler.values import DBC, STEER_THRESHOLD, RAM_CARS, BUTTON_STATES
+from openpilot.selfdrive.car.chrysler.values import DBC, STEER_THRESHOLD, RAM_CARS, BUTTON_STATES, ChryslerFlagsSP
 
 
 class CarState(CarStateBase):
@@ -28,7 +28,7 @@ class CarState(CarStateBase):
     self.buttonStates = BUTTON_STATES.copy()
     self.buttonStatesPrev = BUTTON_STATES.copy()
 
-  def update(self, cp, cp_cam):
+  def update(self, cp, cp_cam, cp_eps):
 
     ret = car.CarState.new_message()
 
@@ -69,16 +69,21 @@ class CarState(CarStateBase):
       unit=1,
     )
 
+    if self.CP.carFingerprint in RAM_CARS:
+      self.esp8_counter = cp.vl["ESP_8"]["COUNTER"]
+
     # button presses
     ret.leftBlinker, ret.rightBlinker = ret.leftBlinkerOn, ret.rightBlinkerOn = self.update_blinker_from_stalk(200, cp.vl["STEERING_LEVERS"]["TURN_SIGNALS"] == 1,
                                                                                                                     cp.vl["STEERING_LEVERS"]["TURN_SIGNALS"] == 2)
     ret.genericToggle = cp.vl["STEERING_LEVERS"]["HIGH_BEAM_PRESSED"] == 1
 
+    cp_steering = cp_eps if self.CP.spFlags & ChryslerFlagsSP.SP_RAM_HD_S0 else cp
+
     # steering wheel
     ret.steeringAngleDeg = cp.vl["STEERING"]["STEERING_ANGLE"] + cp.vl["STEERING"]["STEERING_ANGLE_HP"]
     ret.steeringRateDeg = cp.vl["STEERING"]["STEERING_RATE"]
-    ret.steeringTorque = cp.vl["EPS_2"]["COLUMN_TORQUE"]
-    ret.steeringTorqueEps = cp.vl["EPS_2"]["EPS_TORQUE_MOTOR"]
+    ret.steeringTorque = cp_steering.vl["EPS_2"]["COLUMN_TORQUE"]
+    ret.steeringTorqueEps = cp_steering.vl["EPS_2"]["EPS_TORQUE_MOTOR"]
     ret.steeringPressed = abs(ret.steeringTorque) > STEER_THRESHOLD
 
     # cruise state
@@ -95,7 +100,7 @@ class CarState(CarStateBase):
       # Auto High Beam isn't Located in this message on chrysler or jeep currently located in 729 message
       self.auto_high_beam = cp_cam.vl["DAS_6"]['AUTO_HIGH_BEAM_ON']
       self.lkas_enabled = cp.vl["Center_Stack_2"]["LKAS_Button"] == 1 or cp.vl["Center_Stack_1"]["LKAS_Button"] == 1
-      ret.steerFaultTemporary = cp.vl["EPS_3"]["DASM_FAULT"] == 1
+      ret.steerFaultTemporary = cp_steering.vl["EPS_3"]["DASM_FAULT"] == 1
     else:
       self.lkas_enabled = cp.vl["TRACTION_BUTTON"]["TOGGLE_LKAS"] == 1
       self.lkas_heartbit = cp_cam.vl["LKAS_HEARTBIT"]
@@ -124,6 +129,17 @@ class CarState(CarStateBase):
       ("DAS_3", 50),
       ("DAS_4", 50),
     ]
+    return messages
+
+  @staticmethod
+  def get_steering_signals(CP):
+    messages = [
+      ("EPS_2", 100),
+    ]
+
+    if CP.carFingerprint in RAM_CARS:
+      messages.append(("EPS_3", 50))
+
     return messages
 
   @staticmethod
@@ -160,6 +176,12 @@ class CarState(CarStateBase):
       ]
       messages += CarState.get_cruise_messages()
 
+    if CP.spFlags & ChryslerFlagsSP.SP_RAM_HD_S0:
+      messages.remove(("EPS_2", 100))
+
+      if CP.carFingerprint in RAM_CARS:
+        messages.remove(("EPS_3", 50))
+
     return CANParser(DBC[CP.carFingerprint]["pt"], messages, 0)
 
   @staticmethod
@@ -174,3 +196,12 @@ class CarState(CarStateBase):
       messages.append(("LKAS_HEARTBIT", 10))
 
     return CANParser(DBC[CP.carFingerprint]["pt"], messages, 2)
+
+  @staticmethod
+  def get_eps_can_parser(CP):
+    messages = []
+
+    if CP.spFlags & ChryslerFlagsSP.SP_RAM_HD_S0:
+      messages += CarState.get_steering_signals(CP)
+
+    return CANParser(DBC[CP.carFingerprint]["pt"], messages, 1)

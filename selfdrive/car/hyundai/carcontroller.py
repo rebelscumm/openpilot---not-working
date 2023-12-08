@@ -8,7 +8,7 @@ from opendbc.can.packer import CANPacker
 from openpilot.selfdrive.car import apply_driver_steer_torque_limits, common_fault_avoidance
 from openpilot.selfdrive.car.hyundai import hyundaicanfd, hyundaican
 from openpilot.selfdrive.car.hyundai.hyundaicanfd import CanBus
-from openpilot.selfdrive.car.hyundai.values import HyundaiFlags, HyundaiFlagsSP, Buttons, CarControllerParams, CANFD_CAR, CAR, CAMERA_SCC_CAR
+from openpilot.selfdrive.car.hyundai.values import HyundaiFlags, HyundaiFlagsSP, Buttons, CarControllerParams, CANFD_CAR, CAR, CAMERA_SCC_CAR, LEGACY_SAFETY_MODE_CAR
 from openpilot.selfdrive.controls.lib.drive_helpers import HYUNDAI_V_CRUISE_MIN
 
 VisualAlert = car.CarControl.HUDControl.VisualAlert
@@ -63,7 +63,7 @@ class CarController:
     self.lat_disengage_init = False
     self.lat_active_last = False
 
-    sub_services = ['longitudinalPlanSP']
+    sub_services = ['longitudinalPlan', 'longitudinalPlanSP']
     if CP.openpilotLongitudinalControl:
       sub_services.append('radarState')
     # TODO: Always true, prep for future conditional refactoring
@@ -98,7 +98,10 @@ class CarController:
     self.v_tsc = 0
     self.m_tsc = 0
     self.steady_speed = 0
+    self.speeds = 0
+    self.v_target_plan = 0
     self.hkg_can_smooth_stop = self.param_s.get_bool("HkgSmoothStop")
+    self.custom_stock_planner_speed = self.param_s.get_bool("CustomStockLongPlanner")
     self.lead_distance = 0
 
   def calculate_lead_distance(self, hud_control: car.CarControl.HUDControl) -> float:
@@ -117,6 +120,10 @@ class CarController:
       self.sm.update(0)
 
     if not self.CP.pcmCruiseSpeed:
+      if self.sm.updated['longitudinalPlan']:
+        _speeds = self.sm['longitudinalPlan'].speeds
+        self.speeds = _speeds[-1] if len(_speeds) else 0
+
       if self.sm.updated['longitudinalPlanSP']:
         self.v_tsc_state = self.sm['longitudinalPlanSP'].visionTurnControllerState
         self.slc_state = self.sm['longitudinalPlanSP'].speedLimitControlState
@@ -127,10 +134,12 @@ class CarController:
         self.m_tsc = self.sm['longitudinalPlanSP'].turnSpeed
 
       if self.frame % 200 == 0:
-        self.speed_limit_control_enabled = self.param_s.get_bool("SpeedLimitControl")
+        self.speed_limit_control_enabled = self.param_s.get_bool("EnableSlc")
         self.is_metric = self.param_s.get_bool("IsMetric")
+        self.custom_stock_planner_speed = self.param_s.get_bool("CustomStockLongPlanner")
       self.last_speed_limit_sign_tap = self.param_s.get_bool("LastSpeedLimitSignTap")
       self.v_cruise_min = HYUNDAI_V_CRUISE_MIN[self.is_metric] * (CV.KPH_TO_MPH if not self.is_metric else 1)
+      self.v_target_plan = min(CC.vCruise * CV.KPH_TO_MS, self.speeds)
 
     actuators = CC.actuators
     hud_control = CC.hudControl
@@ -267,7 +276,17 @@ class CarController:
         if not (CC.cruiseControl.cancel or CC.cruiseControl.resume) and CS.out.cruiseState.enabled and not self.CP.pcmCruiseSpeed:
           self.cruise_button = self.get_cruise_buttons(CS, CC.vCruise)
           if self.cruise_button is not None:
-            if self.frame % 2 == 0:
+            if self.CP.carFingerprint in LEGACY_SAFETY_MODE_CAR:
+              send_freq = 1
+              if not (self.v_tsc_state != 0 or self.m_tsc_state > 1) and abs(self.target_speed - self.v_set_dis) <= 2:
+                send_freq = 5
+              # send resume at a max freq of 10Hz
+              if (self.frame - self.last_button_frame) * DT_CTRL > 0.1 * send_freq:
+                # send 25 messages at a time to increases the likelihood of cruise buttons being accepted
+                can_sends.extend([hyundaican.create_clu11(self.packer, self.frame, CS.clu11, self.cruise_button, self.CP.carFingerprint)] * 25)
+                if (self.frame - self.last_button_frame) * DT_CTRL >= 0.15 * send_freq:
+                  self.last_button_frame = self.frame
+            elif self.frame % 2 == 0:
               can_sends.extend([hyundaican.create_clu11(self.packer, (self.frame // 2) + 1, CS.clu11, self.cruise_button, self.CP.carFingerprint)] * 25)
 
       # Parse lead distance from radarState and display the corresponding distance in the car's cluster
@@ -450,6 +469,8 @@ class CarController:
         target_speed_kph = set_speed_kph
       else:
         target_speed_kph = min(v_cruise_kph_prev, set_speed_kph)
+      if self.custom_stock_planner_speed:
+        target_speed_kph = self.curve_speed_hysteresis(self.v_target_plan * CV.MS_TO_KPH)
       if self.v_tsc_state != 0 or self.m_tsc_state > 1:
         self.final_speed_kph = self.get_curve_speed(target_speed_kph, v_cruise_kph_prev)
       else:

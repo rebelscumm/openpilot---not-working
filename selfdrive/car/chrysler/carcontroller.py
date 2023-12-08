@@ -5,7 +5,7 @@ from openpilot.common.params import Params, put_bool_nonblocking
 from openpilot.common.realtime import DT_CTRL
 from openpilot.selfdrive.car import apply_meas_steer_torque_limits
 from openpilot.selfdrive.car.chrysler import chryslercan
-from openpilot.selfdrive.car.chrysler.values import RAM_CARS, RAM_DT, CarControllerParams, ChryslerFlags
+from openpilot.selfdrive.car.chrysler.values import RAM_CARS, RAM_DT, CarControllerParams, ChryslerFlags, ChryslerFlagsSP
 from openpilot.selfdrive.controls.lib.drive_helpers import FCA_V_CRUISE_MIN
 
 BUTTONS_STATES = ["accelCruise", "decelCruise", "cancel", "resumeCruise"]
@@ -21,6 +21,7 @@ class CarController:
     self.last_lkas_falling_edge = 0
     self.lkas_control_bit_prev = False
     self.last_button_frame = 0
+    self.spoof_speed = 0
 
     self.packer = CANPacker(dbc_name)
     self.params = CarControllerParams(CP)
@@ -70,7 +71,7 @@ class CarController:
         self.m_tsc = self.sm['longitudinalPlanSP'].turnSpeed
 
       if self.frame % 200 == 0:
-        self.speed_limit_control_enabled = self.param_s.get_bool("SpeedLimitControl")
+        self.speed_limit_control_enabled = self.param_s.get_bool("EnableSlc")
         self.is_metric = self.param_s.get_bool("IsMetric")
       self.last_speed_limit_sign_tap = self.param_s.get_bool("LastSpeedLimitSignTap")
       self.v_cruise_min = FCA_V_CRUISE_MIN[self.is_metric] * (CV.KPH_TO_MPH if not self.is_metric else 1)
@@ -138,7 +139,10 @@ class CarController:
     if self.frame % 25 == 0:
       if CS.lkas_car_model != -1:
         can_sends.append(chryslercan.create_lkas_hud(self.packer, self.CP, lkas_active, CS.madsEnabled, CC.hudControl.visualAlert,
-                                                     self.hud_count, CS.lkas_car_model, CS.auto_high_beam))
+                                                     self.hud_count, CS.lkas_car_model, CS.auto_high_beam, 0))
+        if self.CP.spFlags & ChryslerFlagsSP.SP_RAM_HD_S0:
+          can_sends.append(chryslercan.create_lkas_hud(self.packer, self.CP, lkas_active, CS.madsEnabled, CC.hudControl.visualAlert,
+                                                       self.hud_count, CS.lkas_car_model, CS.auto_high_beam, 1))
         self.hud_count += 1
 
     # steering
@@ -146,7 +150,12 @@ class CarController:
 
       # TODO: can we make this more sane? why is it different for all the cars?
       lkas_control_bit = self.lkas_control_bit_prev
-      if self.CP.carFingerprint in RAM_DT:
+      if self.CP.spFlags & ChryslerFlagsSP.SP_RAM_HD_S0:
+        if self.spoof_speed >= 36 * CV.MPH_TO_KPH:
+          lkas_control_bit = True
+        else:
+          lkas_control_bit = False
+      elif self.CP.carFingerprint in RAM_DT:
         if self.CP.minEnableSpeed <= CS.out.vEgo <= self.CP.minEnableSpeed + 0.5:
           lkas_control_bit = True
         if (self.CP.minEnableSpeed >= 14.5) and (CS.out.gearShifter != 2):
@@ -169,12 +178,22 @@ class CarController:
       # steer torque
       new_steer = int(round(CC.actuators.steer * self.params.STEER_MAX))
       apply_steer = apply_meas_steer_torque_limits(new_steer, self.apply_steer_last, CS.out.steeringTorqueEps, self.params)
+
+      if self.CP.spFlags & ChryslerFlagsSP.SP_RAM_HD_S0:
+        if lkas_active and CS.out.vEgoRaw * CV.MS_TO_MPH < 36:  # if lkas is active and below threshold spoof speed
+          self.spoof_speed = 36 * CV.MPH_TO_KPH  # MPH
+        else:
+          self.spoof_speed = CS.out.vEgoRaw * CV.MS_TO_KPH
+
       if not lkas_active or not lkas_control_bit or not self.lkas_control_bit_prev:
         apply_steer = 0
       self.apply_steer_last = apply_steer
       self.lkas_control_bit_prev = lkas_control_bit
 
-      can_sends.append(chryslercan.create_lkas_command(self.packer, self.CP, int(apply_steer), lkas_control_bit))
+      if self.CP.spFlags & ChryslerFlagsSP.SP_RAM_HD_S0:
+        can_sends.append(chryslercan.create_speed_spoof(self.packer, CS.esp8_counter, self.spoof_speed))
+        can_sends.append(chryslercan.create_lkas_command(self.packer, self.CP, int(apply_steer), lkas_control_bit, self.frame // 2, 1))
+      can_sends.append(chryslercan.create_lkas_command(self.packer, self.CP, int(apply_steer), lkas_control_bit, self.frame // 2, 0))
 
     self.frame += 1
 

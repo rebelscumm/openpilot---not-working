@@ -1,1 +1,1 @@
-#define CURRENT_MODEL "(New) Lemon Pie (Pending)"
+#define CURRENT_MODEL "Farmville (November 7, 2023)"

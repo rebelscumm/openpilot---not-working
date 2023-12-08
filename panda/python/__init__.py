@@ -171,7 +171,7 @@ class Panda:
   CAN_PACKET_VERSION = 4
   HEALTH_PACKET_VERSION = 14
   CAN_HEALTH_PACKET_VERSION = 5
-  HEALTH_STRUCT = struct.Struct("<IIIIIIIIIBBBBBBHBBBHfBBHBHH")
+  HEALTH_STRUCT = struct.Struct("<IIIIIIIIIBBBBBBHBBBHfBBHBHHB")
   CAN_HEALTH_STRUCT = struct.Struct("<BIBBBBBBBBIIIIIIIHHBBBIIII")
 
   F2_DEVICES = [HW_TYPE_PEDAL, ]
@@ -225,12 +225,13 @@ class Panda:
 
   FLAG_CHRYSLER_RAM_DT = 1
   FLAG_CHRYSLER_RAM_HD = 2
+  FLAG_CHRYSLER_RAM_HD_S0 = (1 << 8)
 
   FLAG_SUBARU_GEN2 = 1
   FLAG_SUBARU_LONG = 2
   FLAG_SUBARU_MAX_STEER_IMPREZA_2018 = 4
 
-  FLAG_SUBARU_LEGACY_FLIP_DRIVER_TORQUE = 1
+  FLAG_SUBARU_PREGLOBAL_REVERSED_DRIVER_TORQUE = 1
 
   FLAG_SUBARU_SNG = 1024
 
@@ -619,6 +620,7 @@ class Panda:
       "fan_stall_count": a[24],
       "sbu1_voltage_mV": a[25],
       "sbu2_voltage_mV": a[26],
+      "som_reset_triggered": a[27],
     }
 
   @ensure_can_health_packet_version

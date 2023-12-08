@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\openpilot",
+    "\\selfdrive",
+    "\\selfdrive\\car",
+    "\\selfdrive\\car\\ford",
+    "\\selfdrive\\controls",
+    "\\selfdrive\\controls\\lib"
+  ],
+  "SelectedNode": "\\selfdrive\\car\\ford\\interface.py",
+  "PreviewInSolutionExplorer": false
+}

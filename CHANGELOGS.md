@@ -1,7 +1,52 @@
-sunnypilot - 0.9.5.1 (2023-11-xx)
+sunnypilot - 0.9.6.1 (2023-xx-xx)
 ========================
-* UPDATED: Synced with commaai's master commit 9528383
-* NEW❗: (New) Lemon Pie driving model
+* NEW❗: Hyundai CAN-FD longitudinal:
+  * NEW❗: Parse lead info for camera-based SCC platforms
+    * Improve lead tracking when using openpilot longitudinal
+* NEW❗: FCA: RAM HD: Steer down to 0 support thanks to realfast!
+  * Steer down to 0 hardware required. For more information, reach out to @castlehill. on Discord
+* UPDATED: OpenStreetMap implementation
+  * Refactored implementation has been brought thanks to pfeiferj's efforts!
+    * Less resource impact
+    * Significantly smaller sizes with databases
+    * All regions are available to download
+    * Weekly map updates thanks to pfeiferj!
+    * Increased the font size of the road name
+  * C3X-specific changes
+    * Altitude (ALT.) display on Developer UI
+    * Current street name on top of driving screen when "OSM Debug UI" is enabled
+  * DISABLED: Map-based Turn Speed Control (M-TSC)
+    * Reimplementation in near future updates
+* Ford F-150 2022-23 support
+* Ford F-150 Lightning 2021-23 support
+* Ford Mustang Mach-E 2021-23 support
+* Hyundai Kona Non-SCC 2019 support thanks to polein78!
+
+sunnypilot - 0.9.5.2 (2023-12-07)
+========================
+* NEW❗: MADS: Allow Navigate on openpilot in Chill Mode
+  * Allow navigation to feed map view into the driving model while using Chill Mode
+  * Support all platforms, including platforms that do not support openpilot longitudinal control & Experimental Mode
+* NEW❗: Neural Network Lateral Controller
+  * Formerly known as "NNFF", this replaces the lateral "torque" controller with one using a neural network trained on each car's (actually, each separate EPS firmware) driving data for increased controls accuracy
+  * Contact @twilsonco in the sunnypilot Discord server with feedback, or to provide log data for your car if your car is currently unsupported
+* NEW❗: Driving Model Selector
+  * Easily switch between driving models without reinstalling branches. Offering immediate access to the latest models upon release
+    * An internet connection is required for downloading models. Each model switch currently involves downloading the model again. Future updates may allow for offline switching
+  * Warning is displayed for metered connections to avoid unexpected data usage if on cellular data
+  * Change driving models via **Settings -> Software -> Current Driving Model**.
+* NEW❗: Hyundai CAN longitudinal:
+  * NEW❗: Enable radar tracks for certain Santa Fe platforms
+    * Internal Combustion Engine (ICE) 2021-23
+    * Hybrid 2022-23
+    * Plug-in Hybrid 2022-23
+* NEW❗: Lane Change: When manually braking with steering engaged, turning on the turn signal will default to Nudge mode
+* Volkswagen MQB CC only platforms (radar or no radar) support thanks to jyoung8607!
+
+sunnypilot - 0.9.5.1 (2023-11-17)
+========================
+* UPDATED: Synced with commaai's master commit e94c3c5
+* NEW❗: Farmville driving model
 * NEW❗: Onroad Settings Panel
   * Onroad buttons (i.e., DLP, GAC) moved to its dedicated panel
     * Driving Personality
@@ -16,15 +61,14 @@ sunnypilot - 0.9.5.1 (2023-11-xx)
 * NEW❗: Dynamic Experimental Control (DEC) thanks to dragonpilot-community!
   * Automatically determines and selects between openpilot ACC and openpilot End to End longitudinal based on conditions for a more natural drive
   * Dynamic Experimental Control is only active while in Experimental Mode
-  * Dynamic Experimental Control must be enabled via "SP - Controls", then toggle via the new Onroad Settings Panel
   * When Dynamic Experimental Control is ON, initially setting cruise speed will set to the vehicle's current speed
-  * Synced with dragonpilot-community/dragonpilot:beta3 commit 52b846f
 * NEW❗: Hyundai CAN longitudinal:
   * NEW❗: Parse lead info for camera-based SCC platforms
     * Improve lead tracking when using openpilot longitudinal
   * NEW❗: Parse lead distance to display on car cluster
     * Introduced better lead distance calculation to display on the car's cluster, replacing the binary "lead visible" indication on the SCC cluster
     * Lead distance is now categorized into different ranges for more detailed and comprehensive information to the driver similar to how stock ACC does it
+  * NEW❗: Parse speed limit sign recognition from camera for certain supported platforms
 * NEW❗: Subaru - Stop and Go auto-resume support thanks to martinl!
   * Global (excluding Gen 2 and Hybrid) and Pre-Global support
 * NEW❗: Toyota - Stop and Go hack
@@ -40,6 +84,19 @@ sunnypilot - 0.9.5.1 (2023-11-xx)
     * [DISTANCE/FOLLOW DISTANCE/GAP DISTANCE] physical button on the steering wheel to select Driving Personality on by default
     * Status now viewable in onroad view or Onroad Settings Panel
     * REMOVED: Gap Adjust Cruise toggle
+* UPDATED: Speed Limit Control (SLC)
+  * NEW❗: Speed Limit Engage Mode
+    * Select the desired mode to set the cruising speed to the speed limit
+      * Warning Only: Warn the driver when the vehicle is driven faster than the speed limit
+      * Auto: Automatic speed adjustment on motorways based on speed limit data
+      * User Confirm: Inform the driver to change set speed of Adaptive Cruise Control to help the driver stay within the speed limit
+    * Supported platforms
+      * openpilot Longitudinal Control available cars (Excluding certain Toyota/Lexus, Ford, explained below)
+      * Custom Stock Longitudinal Control available cars
+    * Unsupported platforms
+      * Toyota/Lexus and Ford - most platforms do not allow us to control the PCM's set speed, requires testers to verify
+  * NEW❗: Speed limit source selector
+    * Select the desired precedence order of sources used to adapt cruise speed to road limits
 * UPDATED: Custom Stock Longitudinal Control
   * RE-ENABLED: Hyundai/Kia/Genesis CAN-FD platforms
 * UPDATED: Custom Offsets reimplementation

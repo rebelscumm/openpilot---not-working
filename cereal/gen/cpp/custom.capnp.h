@@ -24,6 +24,14 @@ enum class LongitudinalPersonalitySP_d92113aa7c18cdf6: uint16_t {
 };
 CAPNP_DECLARE_ENUM(LongitudinalPersonalitySP, d92113aa7c18cdf6);
 CAPNP_DECLARE_SCHEMA(81c2f05a394cf4af);
+CAPNP_DECLARE_SCHEMA(b6a9042bc207bf27);
+CAPNP_DECLARE_SCHEMA(88da8426fae53f07);
+CAPNP_DECLARE_SCHEMA(a9d235d23de15f34);
+CAPNP_DECLARE_SCHEMA(be8ceaa2a89de7dd);
+CAPNP_DECLARE_SCHEMA(8cd56244b40afff5);
+CAPNP_DECLARE_SCHEMA(f4da5f8564a56edb);
+CAPNP_DECLARE_SCHEMA(b5044e038567cd31);
+CAPNP_DECLARE_SCHEMA(8e4c2c83a5d25c2d);
 CAPNP_DECLARE_SCHEMA(aedffd8f31e7b55d);
 CAPNP_DECLARE_SCHEMA(9e7784369b990802);
 enum class SpeedLimitControlState_9e7784369b990802: uint16_t {
@@ -31,6 +39,7 @@ enum class SpeedLimitControlState_9e7784369b990802: uint16_t {
   TEMP_INACTIVE,
   ADAPTING,
   ACTIVE,
+  PRE_ACTIVE,
 };
 CAPNP_DECLARE_ENUM(SpeedLimitControlState, 9e7784369b990802);
 CAPNP_DECLARE_SCHEMA(d1124e845254aeda);
@@ -92,9 +101,146 @@ struct ControlsStateSP {
   class Reader;
   class Builder;
   class Pipeline;
+  struct LateralINDIState;
+  struct LateralPIDState;
+  struct LateralAngleState;
+  struct LateralDebugState;
+  struct LateralTorqueState;
+  struct LateralCurvatureState;
+  struct LateralLQRState;
+  struct LateralControlState;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(81c2f05a394cf4af, 0, 1)
+    CAPNP_DECLARE_STRUCT_HEADER(81c2f05a394cf4af, 1, 2)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct ControlsStateSP::LateralINDIState {
+  LateralINDIState() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(b6a9042bc207bf27, 0, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct ControlsStateSP::LateralPIDState {
+  LateralPIDState() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(88da8426fae53f07, 0, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct ControlsStateSP::LateralAngleState {
+  LateralAngleState() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(a9d235d23de15f34, 0, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct ControlsStateSP::LateralDebugState {
+  LateralDebugState() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(be8ceaa2a89de7dd, 0, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct ControlsStateSP::LateralTorqueState {
+  LateralTorqueState() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(8cd56244b40afff5, 0, 1)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct ControlsStateSP::LateralCurvatureState {
+  LateralCurvatureState() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(f4da5f8564a56edb, 0, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct ControlsStateSP::LateralLQRState {
+  LateralLQRState() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(b5044e038567cd31, 0, 0)
+    #if !CAPNP_LITE
+    static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
+    #endif  // !CAPNP_LITE
+  };
+};
+
+struct ControlsStateSP::LateralControlState {
+  LateralControlState() = delete;
+
+  class Reader;
+  class Builder;
+  class Pipeline;
+  enum Which: uint16_t {
+    INDI_STATE,
+    PID_STATE,
+    ANGLE_STATE,
+    DEBUG_STATE,
+    TORQUE_STATE,
+    CURVATURE_STATE,
+    LQR_STATE_D_E_P_R_E_C_A_T_E_D,
+  };
+
+  struct _capnpPrivate {
+    CAPNP_DECLARE_STRUCT_HEADER(8e4c2c83a5d25c2d, 1, 2)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -268,6 +414,8 @@ public:
   inline bool hasLateralState() const;
   inline  ::capnp::Text::Reader getLateralState() const;
 
+  inline typename LateralControlState::Reader getLateralControlState() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -303,6 +451,9 @@ public:
   inline void adoptLateralState(::capnp::Orphan< ::capnp::Text>&& value);
   inline ::capnp::Orphan< ::capnp::Text> disownLateralState();
 
+  inline typename LateralControlState::Builder getLateralControlState();
+  inline typename LateralControlState::Builder initLateralControlState();
+
 private:
   ::capnp::_::StructBuilder _builder;
   template <typename, ::capnp::Kind>
@@ -316,6 +467,672 @@ private:
 class ControlsStateSP::Pipeline {
 public:
   typedef ControlsStateSP Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+  inline typename LateralControlState::Pipeline getLateralControlState();
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class ControlsStateSP::LateralINDIState::Reader {
+public:
+  typedef LateralINDIState Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class ControlsStateSP::LateralINDIState::Builder {
+public:
+  typedef LateralINDIState Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class ControlsStateSP::LateralINDIState::Pipeline {
+public:
+  typedef LateralINDIState Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class ControlsStateSP::LateralPIDState::Reader {
+public:
+  typedef LateralPIDState Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class ControlsStateSP::LateralPIDState::Builder {
+public:
+  typedef LateralPIDState Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class ControlsStateSP::LateralPIDState::Pipeline {
+public:
+  typedef LateralPIDState Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class ControlsStateSP::LateralAngleState::Reader {
+public:
+  typedef LateralAngleState Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class ControlsStateSP::LateralAngleState::Builder {
+public:
+  typedef LateralAngleState Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class ControlsStateSP::LateralAngleState::Pipeline {
+public:
+  typedef LateralAngleState Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class ControlsStateSP::LateralDebugState::Reader {
+public:
+  typedef LateralDebugState Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class ControlsStateSP::LateralDebugState::Builder {
+public:
+  typedef LateralDebugState Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class ControlsStateSP::LateralDebugState::Pipeline {
+public:
+  typedef LateralDebugState Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class ControlsStateSP::LateralTorqueState::Reader {
+public:
+  typedef LateralTorqueState Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline bool hasNnLog() const;
+  inline  ::capnp::List<float,  ::capnp::Kind::PRIMITIVE>::Reader getNnLog() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class ControlsStateSP::LateralTorqueState::Builder {
+public:
+  typedef LateralTorqueState Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline bool hasNnLog();
+  inline  ::capnp::List<float,  ::capnp::Kind::PRIMITIVE>::Builder getNnLog();
+  inline void setNnLog( ::capnp::List<float,  ::capnp::Kind::PRIMITIVE>::Reader value);
+  inline void setNnLog(::kj::ArrayPtr<const float> value);
+  inline  ::capnp::List<float,  ::capnp::Kind::PRIMITIVE>::Builder initNnLog(unsigned int size);
+  inline void adoptNnLog(::capnp::Orphan< ::capnp::List<float,  ::capnp::Kind::PRIMITIVE>>&& value);
+  inline ::capnp::Orphan< ::capnp::List<float,  ::capnp::Kind::PRIMITIVE>> disownNnLog();
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class ControlsStateSP::LateralTorqueState::Pipeline {
+public:
+  typedef LateralTorqueState Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class ControlsStateSP::LateralCurvatureState::Reader {
+public:
+  typedef LateralCurvatureState Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class ControlsStateSP::LateralCurvatureState::Builder {
+public:
+  typedef LateralCurvatureState Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class ControlsStateSP::LateralCurvatureState::Pipeline {
+public:
+  typedef LateralCurvatureState Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class ControlsStateSP::LateralLQRState::Reader {
+public:
+  typedef LateralLQRState Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class ControlsStateSP::LateralLQRState::Builder {
+public:
+  typedef LateralLQRState Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class ControlsStateSP::LateralLQRState::Pipeline {
+public:
+  typedef LateralLQRState Pipelines;
+
+  inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
+  inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
+      : _typeless(kj::mv(typeless)) {}
+
+private:
+  ::capnp::AnyPointer::Pipeline _typeless;
+  friend class ::capnp::PipelineHook;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+};
+#endif  // !CAPNP_LITE
+
+class ControlsStateSP::LateralControlState::Reader {
+public:
+  typedef LateralControlState Reads;
+
+  Reader() = default;
+  inline explicit Reader(::capnp::_::StructReader base): _reader(base) {}
+
+  inline ::capnp::MessageSize totalSize() const {
+    return _reader.totalSize().asPublic();
+  }
+
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const {
+    return ::capnp::_::structString(_reader, *_capnpPrivate::brand());
+  }
+#endif  // !CAPNP_LITE
+
+  inline Which which() const;
+  inline bool isIndiState() const;
+  inline bool hasIndiState() const;
+  inline  ::cereal::ControlsStateSP::LateralINDIState::Reader getIndiState() const;
+
+  inline bool isPidState() const;
+  inline bool hasPidState() const;
+  inline  ::cereal::ControlsStateSP::LateralPIDState::Reader getPidState() const;
+
+  inline bool isAngleState() const;
+  inline bool hasAngleState() const;
+  inline  ::cereal::ControlsStateSP::LateralAngleState::Reader getAngleState() const;
+
+  inline bool isDebugState() const;
+  inline bool hasDebugState() const;
+  inline  ::cereal::ControlsStateSP::LateralDebugState::Reader getDebugState() const;
+
+  inline bool isTorqueState() const;
+  inline bool hasTorqueState() const;
+  inline  ::cereal::ControlsStateSP::LateralTorqueState::Reader getTorqueState() const;
+
+  inline bool isCurvatureState() const;
+  inline bool hasCurvatureState() const;
+  inline  ::cereal::ControlsStateSP::LateralCurvatureState::Reader getCurvatureState() const;
+
+  inline bool isLqrStateDEPRECATED() const;
+  inline bool hasLqrStateDEPRECATED() const;
+  inline  ::cereal::ControlsStateSP::LateralLQRState::Reader getLqrStateDEPRECATED() const;
+
+private:
+  ::capnp::_::StructReader _reader;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::List;
+  friend class ::capnp::MessageBuilder;
+  friend class ::capnp::Orphanage;
+};
+
+class ControlsStateSP::LateralControlState::Builder {
+public:
+  typedef LateralControlState Builds;
+
+  Builder() = delete;  // Deleted to discourage incorrect usage.
+                       // You can explicitly initialize to nullptr instead.
+  inline Builder(decltype(nullptr)) {}
+  inline explicit Builder(::capnp::_::StructBuilder base): _builder(base) {}
+  inline operator Reader() const { return Reader(_builder.asReader()); }
+  inline Reader asReader() const { return *this; }
+
+  inline ::capnp::MessageSize totalSize() const { return asReader().totalSize(); }
+#if !CAPNP_LITE
+  inline ::kj::StringTree toString() const { return asReader().toString(); }
+#endif  // !CAPNP_LITE
+
+  inline Which which();
+  inline bool isIndiState();
+  inline bool hasIndiState();
+  inline  ::cereal::ControlsStateSP::LateralINDIState::Builder getIndiState();
+  inline void setIndiState( ::cereal::ControlsStateSP::LateralINDIState::Reader value);
+  inline  ::cereal::ControlsStateSP::LateralINDIState::Builder initIndiState();
+  inline void adoptIndiState(::capnp::Orphan< ::cereal::ControlsStateSP::LateralINDIState>&& value);
+  inline ::capnp::Orphan< ::cereal::ControlsStateSP::LateralINDIState> disownIndiState();
+
+  inline bool isPidState();
+  inline bool hasPidState();
+  inline  ::cereal::ControlsStateSP::LateralPIDState::Builder getPidState();
+  inline void setPidState( ::cereal::ControlsStateSP::LateralPIDState::Reader value);
+  inline  ::cereal::ControlsStateSP::LateralPIDState::Builder initPidState();
+  inline void adoptPidState(::capnp::Orphan< ::cereal::ControlsStateSP::LateralPIDState>&& value);
+  inline ::capnp::Orphan< ::cereal::ControlsStateSP::LateralPIDState> disownPidState();
+
+  inline bool isAngleState();
+  inline bool hasAngleState();
+  inline  ::cereal::ControlsStateSP::LateralAngleState::Builder getAngleState();
+  inline void setAngleState( ::cereal::ControlsStateSP::LateralAngleState::Reader value);
+  inline  ::cereal::ControlsStateSP::LateralAngleState::Builder initAngleState();
+  inline void adoptAngleState(::capnp::Orphan< ::cereal::ControlsStateSP::LateralAngleState>&& value);
+  inline ::capnp::Orphan< ::cereal::ControlsStateSP::LateralAngleState> disownAngleState();
+
+  inline bool isDebugState();
+  inline bool hasDebugState();
+  inline  ::cereal::ControlsStateSP::LateralDebugState::Builder getDebugState();
+  inline void setDebugState( ::cereal::ControlsStateSP::LateralDebugState::Reader value);
+  inline  ::cereal::ControlsStateSP::LateralDebugState::Builder initDebugState();
+  inline void adoptDebugState(::capnp::Orphan< ::cereal::ControlsStateSP::LateralDebugState>&& value);
+  inline ::capnp::Orphan< ::cereal::ControlsStateSP::LateralDebugState> disownDebugState();
+
+  inline bool isTorqueState();
+  inline bool hasTorqueState();
+  inline  ::cereal::ControlsStateSP::LateralTorqueState::Builder getTorqueState();
+  inline void setTorqueState( ::cereal::ControlsStateSP::LateralTorqueState::Reader value);
+  inline  ::cereal::ControlsStateSP::LateralTorqueState::Builder initTorqueState();
+  inline void adoptTorqueState(::capnp::Orphan< ::cereal::ControlsStateSP::LateralTorqueState>&& value);
+  inline ::capnp::Orphan< ::cereal::ControlsStateSP::LateralTorqueState> disownTorqueState();
+
+  inline bool isCurvatureState();
+  inline bool hasCurvatureState();
+  inline  ::cereal::ControlsStateSP::LateralCurvatureState::Builder getCurvatureState();
+  inline void setCurvatureState( ::cereal::ControlsStateSP::LateralCurvatureState::Reader value);
+  inline  ::cereal::ControlsStateSP::LateralCurvatureState::Builder initCurvatureState();
+  inline void adoptCurvatureState(::capnp::Orphan< ::cereal::ControlsStateSP::LateralCurvatureState>&& value);
+  inline ::capnp::Orphan< ::cereal::ControlsStateSP::LateralCurvatureState> disownCurvatureState();
+
+  inline bool isLqrStateDEPRECATED();
+  inline bool hasLqrStateDEPRECATED();
+  inline  ::cereal::ControlsStateSP::LateralLQRState::Builder getLqrStateDEPRECATED();
+  inline void setLqrStateDEPRECATED( ::cereal::ControlsStateSP::LateralLQRState::Reader value);
+  inline  ::cereal::ControlsStateSP::LateralLQRState::Builder initLqrStateDEPRECATED();
+  inline void adoptLqrStateDEPRECATED(::capnp::Orphan< ::cereal::ControlsStateSP::LateralLQRState>&& value);
+  inline ::capnp::Orphan< ::cereal::ControlsStateSP::LateralLQRState> disownLqrStateDEPRECATED();
+
+private:
+  ::capnp::_::StructBuilder _builder;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::ToDynamic_;
+  friend class ::capnp::Orphanage;
+  template <typename, ::capnp::Kind>
+  friend struct ::capnp::_::PointerHelpers;
+};
+
+#if !CAPNP_LITE
+class ControlsStateSP::LateralControlState::Pipeline {
+public:
+  typedef LateralControlState Pipelines;
 
   inline Pipeline(decltype(nullptr)): _typeless(nullptr) {}
   inline explicit Pipeline(::capnp::AnyPointer::Pipeline&& typeless)
@@ -1338,6 +2155,447 @@ inline void ControlsStateSP::Builder::adoptLateralState(
 inline ::capnp::Orphan< ::capnp::Text> ControlsStateSP::Builder::disownLateralState() {
   return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
       ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+inline typename ControlsStateSP::LateralControlState::Reader ControlsStateSP::Reader::getLateralControlState() const {
+  return typename ControlsStateSP::LateralControlState::Reader(_reader);
+}
+inline typename ControlsStateSP::LateralControlState::Builder ControlsStateSP::Builder::getLateralControlState() {
+  return typename ControlsStateSP::LateralControlState::Builder(_builder);
+}
+#if !CAPNP_LITE
+inline typename ControlsStateSP::LateralControlState::Pipeline ControlsStateSP::Pipeline::getLateralControlState() {
+  return typename ControlsStateSP::LateralControlState::Pipeline(_typeless.noop());
+}
+#endif  // !CAPNP_LITE
+inline typename ControlsStateSP::LateralControlState::Builder ControlsStateSP::Builder::initLateralControlState() {
+  _builder.setDataField< ::uint16_t>(::capnp::bounded<0>() * ::capnp::ELEMENTS, 0);
+  _builder.getPointerField(::capnp::bounded<1>() * ::capnp::POINTERS).clear();
+  return typename ControlsStateSP::LateralControlState::Builder(_builder);
+}
+inline bool ControlsStateSP::LateralTorqueState::Reader::hasNnLog() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool ControlsStateSP::LateralTorqueState::Builder::hasNnLog() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::List<float,  ::capnp::Kind::PRIMITIVE>::Reader ControlsStateSP::LateralTorqueState::Reader::getNnLog() const {
+  return ::capnp::_::PointerHelpers< ::capnp::List<float,  ::capnp::Kind::PRIMITIVE>>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::capnp::List<float,  ::capnp::Kind::PRIMITIVE>::Builder ControlsStateSP::LateralTorqueState::Builder::getNnLog() {
+  return ::capnp::_::PointerHelpers< ::capnp::List<float,  ::capnp::Kind::PRIMITIVE>>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void ControlsStateSP::LateralTorqueState::Builder::setNnLog( ::capnp::List<float,  ::capnp::Kind::PRIMITIVE>::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::List<float,  ::capnp::Kind::PRIMITIVE>>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline void ControlsStateSP::LateralTorqueState::Builder::setNnLog(::kj::ArrayPtr<const float> value) {
+  ::capnp::_::PointerHelpers< ::capnp::List<float,  ::capnp::Kind::PRIMITIVE>>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::List<float,  ::capnp::Kind::PRIMITIVE>::Builder ControlsStateSP::LateralTorqueState::Builder::initNnLog(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::List<float,  ::capnp::Kind::PRIMITIVE>>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
+}
+inline void ControlsStateSP::LateralTorqueState::Builder::adoptNnLog(
+    ::capnp::Orphan< ::capnp::List<float,  ::capnp::Kind::PRIMITIVE>>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::List<float,  ::capnp::Kind::PRIMITIVE>>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::List<float,  ::capnp::Kind::PRIMITIVE>> ControlsStateSP::LateralTorqueState::Builder::disownNnLog() {
+  return ::capnp::_::PointerHelpers< ::capnp::List<float,  ::capnp::Kind::PRIMITIVE>>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+inline  ::cereal::ControlsStateSP::LateralControlState::Which ControlsStateSP::LateralControlState::Reader::which() const {
+  return _reader.getDataField<Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+inline  ::cereal::ControlsStateSP::LateralControlState::Which ControlsStateSP::LateralControlState::Builder::which() {
+  return _builder.getDataField<Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+
+inline bool ControlsStateSP::LateralControlState::Reader::isIndiState() const {
+  return which() == ControlsStateSP::LateralControlState::INDI_STATE;
+}
+inline bool ControlsStateSP::LateralControlState::Builder::isIndiState() {
+  return which() == ControlsStateSP::LateralControlState::INDI_STATE;
+}
+inline bool ControlsStateSP::LateralControlState::Reader::hasIndiState() const {
+  if (which() != ControlsStateSP::LateralControlState::INDI_STATE) return false;
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool ControlsStateSP::LateralControlState::Builder::hasIndiState() {
+  if (which() != ControlsStateSP::LateralControlState::INDI_STATE) return false;
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline  ::cereal::ControlsStateSP::LateralINDIState::Reader ControlsStateSP::LateralControlState::Reader::getIndiState() const {
+  KJ_IREQUIRE((which() == ControlsStateSP::LateralControlState::INDI_STATE),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralINDIState>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::cereal::ControlsStateSP::LateralINDIState::Builder ControlsStateSP::LateralControlState::Builder::getIndiState() {
+  KJ_IREQUIRE((which() == ControlsStateSP::LateralControlState::INDI_STATE),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralINDIState>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void ControlsStateSP::LateralControlState::Builder::setIndiState( ::cereal::ControlsStateSP::LateralINDIState::Reader value) {
+  _builder.setDataField<ControlsStateSP::LateralControlState::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, ControlsStateSP::LateralControlState::INDI_STATE);
+  ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralINDIState>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline  ::cereal::ControlsStateSP::LateralINDIState::Builder ControlsStateSP::LateralControlState::Builder::initIndiState() {
+  _builder.setDataField<ControlsStateSP::LateralControlState::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, ControlsStateSP::LateralControlState::INDI_STATE);
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralINDIState>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void ControlsStateSP::LateralControlState::Builder::adoptIndiState(
+    ::capnp::Orphan< ::cereal::ControlsStateSP::LateralINDIState>&& value) {
+  _builder.setDataField<ControlsStateSP::LateralControlState::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, ControlsStateSP::LateralControlState::INDI_STATE);
+  ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralINDIState>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::cereal::ControlsStateSP::LateralINDIState> ControlsStateSP::LateralControlState::Builder::disownIndiState() {
+  KJ_IREQUIRE((which() == ControlsStateSP::LateralControlState::INDI_STATE),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralINDIState>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+
+inline bool ControlsStateSP::LateralControlState::Reader::isPidState() const {
+  return which() == ControlsStateSP::LateralControlState::PID_STATE;
+}
+inline bool ControlsStateSP::LateralControlState::Builder::isPidState() {
+  return which() == ControlsStateSP::LateralControlState::PID_STATE;
+}
+inline bool ControlsStateSP::LateralControlState::Reader::hasPidState() const {
+  if (which() != ControlsStateSP::LateralControlState::PID_STATE) return false;
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool ControlsStateSP::LateralControlState::Builder::hasPidState() {
+  if (which() != ControlsStateSP::LateralControlState::PID_STATE) return false;
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline  ::cereal::ControlsStateSP::LateralPIDState::Reader ControlsStateSP::LateralControlState::Reader::getPidState() const {
+  KJ_IREQUIRE((which() == ControlsStateSP::LateralControlState::PID_STATE),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralPIDState>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::cereal::ControlsStateSP::LateralPIDState::Builder ControlsStateSP::LateralControlState::Builder::getPidState() {
+  KJ_IREQUIRE((which() == ControlsStateSP::LateralControlState::PID_STATE),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralPIDState>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void ControlsStateSP::LateralControlState::Builder::setPidState( ::cereal::ControlsStateSP::LateralPIDState::Reader value) {
+  _builder.setDataField<ControlsStateSP::LateralControlState::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, ControlsStateSP::LateralControlState::PID_STATE);
+  ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralPIDState>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline  ::cereal::ControlsStateSP::LateralPIDState::Builder ControlsStateSP::LateralControlState::Builder::initPidState() {
+  _builder.setDataField<ControlsStateSP::LateralControlState::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, ControlsStateSP::LateralControlState::PID_STATE);
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralPIDState>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void ControlsStateSP::LateralControlState::Builder::adoptPidState(
+    ::capnp::Orphan< ::cereal::ControlsStateSP::LateralPIDState>&& value) {
+  _builder.setDataField<ControlsStateSP::LateralControlState::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, ControlsStateSP::LateralControlState::PID_STATE);
+  ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralPIDState>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::cereal::ControlsStateSP::LateralPIDState> ControlsStateSP::LateralControlState::Builder::disownPidState() {
+  KJ_IREQUIRE((which() == ControlsStateSP::LateralControlState::PID_STATE),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralPIDState>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+
+inline bool ControlsStateSP::LateralControlState::Reader::isAngleState() const {
+  return which() == ControlsStateSP::LateralControlState::ANGLE_STATE;
+}
+inline bool ControlsStateSP::LateralControlState::Builder::isAngleState() {
+  return which() == ControlsStateSP::LateralControlState::ANGLE_STATE;
+}
+inline bool ControlsStateSP::LateralControlState::Reader::hasAngleState() const {
+  if (which() != ControlsStateSP::LateralControlState::ANGLE_STATE) return false;
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool ControlsStateSP::LateralControlState::Builder::hasAngleState() {
+  if (which() != ControlsStateSP::LateralControlState::ANGLE_STATE) return false;
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline  ::cereal::ControlsStateSP::LateralAngleState::Reader ControlsStateSP::LateralControlState::Reader::getAngleState() const {
+  KJ_IREQUIRE((which() == ControlsStateSP::LateralControlState::ANGLE_STATE),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralAngleState>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::cereal::ControlsStateSP::LateralAngleState::Builder ControlsStateSP::LateralControlState::Builder::getAngleState() {
+  KJ_IREQUIRE((which() == ControlsStateSP::LateralControlState::ANGLE_STATE),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralAngleState>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void ControlsStateSP::LateralControlState::Builder::setAngleState( ::cereal::ControlsStateSP::LateralAngleState::Reader value) {
+  _builder.setDataField<ControlsStateSP::LateralControlState::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, ControlsStateSP::LateralControlState::ANGLE_STATE);
+  ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralAngleState>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline  ::cereal::ControlsStateSP::LateralAngleState::Builder ControlsStateSP::LateralControlState::Builder::initAngleState() {
+  _builder.setDataField<ControlsStateSP::LateralControlState::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, ControlsStateSP::LateralControlState::ANGLE_STATE);
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralAngleState>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void ControlsStateSP::LateralControlState::Builder::adoptAngleState(
+    ::capnp::Orphan< ::cereal::ControlsStateSP::LateralAngleState>&& value) {
+  _builder.setDataField<ControlsStateSP::LateralControlState::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, ControlsStateSP::LateralControlState::ANGLE_STATE);
+  ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralAngleState>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::cereal::ControlsStateSP::LateralAngleState> ControlsStateSP::LateralControlState::Builder::disownAngleState() {
+  KJ_IREQUIRE((which() == ControlsStateSP::LateralControlState::ANGLE_STATE),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralAngleState>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+
+inline bool ControlsStateSP::LateralControlState::Reader::isDebugState() const {
+  return which() == ControlsStateSP::LateralControlState::DEBUG_STATE;
+}
+inline bool ControlsStateSP::LateralControlState::Builder::isDebugState() {
+  return which() == ControlsStateSP::LateralControlState::DEBUG_STATE;
+}
+inline bool ControlsStateSP::LateralControlState::Reader::hasDebugState() const {
+  if (which() != ControlsStateSP::LateralControlState::DEBUG_STATE) return false;
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool ControlsStateSP::LateralControlState::Builder::hasDebugState() {
+  if (which() != ControlsStateSP::LateralControlState::DEBUG_STATE) return false;
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline  ::cereal::ControlsStateSP::LateralDebugState::Reader ControlsStateSP::LateralControlState::Reader::getDebugState() const {
+  KJ_IREQUIRE((which() == ControlsStateSP::LateralControlState::DEBUG_STATE),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralDebugState>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::cereal::ControlsStateSP::LateralDebugState::Builder ControlsStateSP::LateralControlState::Builder::getDebugState() {
+  KJ_IREQUIRE((which() == ControlsStateSP::LateralControlState::DEBUG_STATE),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralDebugState>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void ControlsStateSP::LateralControlState::Builder::setDebugState( ::cereal::ControlsStateSP::LateralDebugState::Reader value) {
+  _builder.setDataField<ControlsStateSP::LateralControlState::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, ControlsStateSP::LateralControlState::DEBUG_STATE);
+  ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralDebugState>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline  ::cereal::ControlsStateSP::LateralDebugState::Builder ControlsStateSP::LateralControlState::Builder::initDebugState() {
+  _builder.setDataField<ControlsStateSP::LateralControlState::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, ControlsStateSP::LateralControlState::DEBUG_STATE);
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralDebugState>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void ControlsStateSP::LateralControlState::Builder::adoptDebugState(
+    ::capnp::Orphan< ::cereal::ControlsStateSP::LateralDebugState>&& value) {
+  _builder.setDataField<ControlsStateSP::LateralControlState::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, ControlsStateSP::LateralControlState::DEBUG_STATE);
+  ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralDebugState>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::cereal::ControlsStateSP::LateralDebugState> ControlsStateSP::LateralControlState::Builder::disownDebugState() {
+  KJ_IREQUIRE((which() == ControlsStateSP::LateralControlState::DEBUG_STATE),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralDebugState>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+
+inline bool ControlsStateSP::LateralControlState::Reader::isTorqueState() const {
+  return which() == ControlsStateSP::LateralControlState::TORQUE_STATE;
+}
+inline bool ControlsStateSP::LateralControlState::Builder::isTorqueState() {
+  return which() == ControlsStateSP::LateralControlState::TORQUE_STATE;
+}
+inline bool ControlsStateSP::LateralControlState::Reader::hasTorqueState() const {
+  if (which() != ControlsStateSP::LateralControlState::TORQUE_STATE) return false;
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool ControlsStateSP::LateralControlState::Builder::hasTorqueState() {
+  if (which() != ControlsStateSP::LateralControlState::TORQUE_STATE) return false;
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline  ::cereal::ControlsStateSP::LateralTorqueState::Reader ControlsStateSP::LateralControlState::Reader::getTorqueState() const {
+  KJ_IREQUIRE((which() == ControlsStateSP::LateralControlState::TORQUE_STATE),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralTorqueState>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::cereal::ControlsStateSP::LateralTorqueState::Builder ControlsStateSP::LateralControlState::Builder::getTorqueState() {
+  KJ_IREQUIRE((which() == ControlsStateSP::LateralControlState::TORQUE_STATE),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralTorqueState>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void ControlsStateSP::LateralControlState::Builder::setTorqueState( ::cereal::ControlsStateSP::LateralTorqueState::Reader value) {
+  _builder.setDataField<ControlsStateSP::LateralControlState::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, ControlsStateSP::LateralControlState::TORQUE_STATE);
+  ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralTorqueState>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline  ::cereal::ControlsStateSP::LateralTorqueState::Builder ControlsStateSP::LateralControlState::Builder::initTorqueState() {
+  _builder.setDataField<ControlsStateSP::LateralControlState::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, ControlsStateSP::LateralControlState::TORQUE_STATE);
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralTorqueState>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void ControlsStateSP::LateralControlState::Builder::adoptTorqueState(
+    ::capnp::Orphan< ::cereal::ControlsStateSP::LateralTorqueState>&& value) {
+  _builder.setDataField<ControlsStateSP::LateralControlState::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, ControlsStateSP::LateralControlState::TORQUE_STATE);
+  ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralTorqueState>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::cereal::ControlsStateSP::LateralTorqueState> ControlsStateSP::LateralControlState::Builder::disownTorqueState() {
+  KJ_IREQUIRE((which() == ControlsStateSP::LateralControlState::TORQUE_STATE),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralTorqueState>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+
+inline bool ControlsStateSP::LateralControlState::Reader::isCurvatureState() const {
+  return which() == ControlsStateSP::LateralControlState::CURVATURE_STATE;
+}
+inline bool ControlsStateSP::LateralControlState::Builder::isCurvatureState() {
+  return which() == ControlsStateSP::LateralControlState::CURVATURE_STATE;
+}
+inline bool ControlsStateSP::LateralControlState::Reader::hasCurvatureState() const {
+  if (which() != ControlsStateSP::LateralControlState::CURVATURE_STATE) return false;
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool ControlsStateSP::LateralControlState::Builder::hasCurvatureState() {
+  if (which() != ControlsStateSP::LateralControlState::CURVATURE_STATE) return false;
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline  ::cereal::ControlsStateSP::LateralCurvatureState::Reader ControlsStateSP::LateralControlState::Reader::getCurvatureState() const {
+  KJ_IREQUIRE((which() == ControlsStateSP::LateralControlState::CURVATURE_STATE),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralCurvatureState>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::cereal::ControlsStateSP::LateralCurvatureState::Builder ControlsStateSP::LateralControlState::Builder::getCurvatureState() {
+  KJ_IREQUIRE((which() == ControlsStateSP::LateralControlState::CURVATURE_STATE),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralCurvatureState>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void ControlsStateSP::LateralControlState::Builder::setCurvatureState( ::cereal::ControlsStateSP::LateralCurvatureState::Reader value) {
+  _builder.setDataField<ControlsStateSP::LateralControlState::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, ControlsStateSP::LateralControlState::CURVATURE_STATE);
+  ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralCurvatureState>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline  ::cereal::ControlsStateSP::LateralCurvatureState::Builder ControlsStateSP::LateralControlState::Builder::initCurvatureState() {
+  _builder.setDataField<ControlsStateSP::LateralControlState::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, ControlsStateSP::LateralControlState::CURVATURE_STATE);
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralCurvatureState>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void ControlsStateSP::LateralControlState::Builder::adoptCurvatureState(
+    ::capnp::Orphan< ::cereal::ControlsStateSP::LateralCurvatureState>&& value) {
+  _builder.setDataField<ControlsStateSP::LateralControlState::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, ControlsStateSP::LateralControlState::CURVATURE_STATE);
+  ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralCurvatureState>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::cereal::ControlsStateSP::LateralCurvatureState> ControlsStateSP::LateralControlState::Builder::disownCurvatureState() {
+  KJ_IREQUIRE((which() == ControlsStateSP::LateralControlState::CURVATURE_STATE),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralCurvatureState>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+
+inline bool ControlsStateSP::LateralControlState::Reader::isLqrStateDEPRECATED() const {
+  return which() == ControlsStateSP::LateralControlState::LQR_STATE_D_E_P_R_E_C_A_T_E_D;
+}
+inline bool ControlsStateSP::LateralControlState::Builder::isLqrStateDEPRECATED() {
+  return which() == ControlsStateSP::LateralControlState::LQR_STATE_D_E_P_R_E_C_A_T_E_D;
+}
+inline bool ControlsStateSP::LateralControlState::Reader::hasLqrStateDEPRECATED() const {
+  if (which() != ControlsStateSP::LateralControlState::LQR_STATE_D_E_P_R_E_C_A_T_E_D) return false;
+  return !_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline bool ControlsStateSP::LateralControlState::Builder::hasLqrStateDEPRECATED() {
+  if (which() != ControlsStateSP::LateralControlState::LQR_STATE_D_E_P_R_E_C_A_T_E_D) return false;
+  return !_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS).isNull();
+}
+inline  ::cereal::ControlsStateSP::LateralLQRState::Reader ControlsStateSP::LateralControlState::Reader::getLqrStateDEPRECATED() const {
+  KJ_IREQUIRE((which() == ControlsStateSP::LateralControlState::LQR_STATE_D_E_P_R_E_C_A_T_E_D),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralLQRState>::get(_reader.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline  ::cereal::ControlsStateSP::LateralLQRState::Builder ControlsStateSP::LateralControlState::Builder::getLqrStateDEPRECATED() {
+  KJ_IREQUIRE((which() == ControlsStateSP::LateralControlState::LQR_STATE_D_E_P_R_E_C_A_T_E_D),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralLQRState>::get(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void ControlsStateSP::LateralControlState::Builder::setLqrStateDEPRECATED( ::cereal::ControlsStateSP::LateralLQRState::Reader value) {
+  _builder.setDataField<ControlsStateSP::LateralControlState::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, ControlsStateSP::LateralControlState::LQR_STATE_D_E_P_R_E_C_A_T_E_D);
+  ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralLQRState>::set(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), value);
+}
+inline  ::cereal::ControlsStateSP::LateralLQRState::Builder ControlsStateSP::LateralControlState::Builder::initLqrStateDEPRECATED() {
+  _builder.setDataField<ControlsStateSP::LateralControlState::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, ControlsStateSP::LateralControlState::LQR_STATE_D_E_P_R_E_C_A_T_E_D);
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralLQRState>::init(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
+}
+inline void ControlsStateSP::LateralControlState::Builder::adoptLqrStateDEPRECATED(
+    ::capnp::Orphan< ::cereal::ControlsStateSP::LateralLQRState>&& value) {
+  _builder.setDataField<ControlsStateSP::LateralControlState::Which>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, ControlsStateSP::LateralControlState::LQR_STATE_D_E_P_R_E_C_A_T_E_D);
+  ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralLQRState>::adopt(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::cereal::ControlsStateSP::LateralLQRState> ControlsStateSP::LateralControlState::Builder::disownLqrStateDEPRECATED() {
+  KJ_IREQUIRE((which() == ControlsStateSP::LateralControlState::LQR_STATE_D_E_P_R_E_C_A_T_E_D),
+              "Must check which() before get()ing a union member.");
+  return ::capnp::_::PointerHelpers< ::cereal::ControlsStateSP::LateralLQRState>::disown(_builder.getPointerField(
+      ::capnp::bounded<1>() * ::capnp::POINTERS));
 }
 
 inline  ::cereal::LongitudinalPlanSP::VisionTurnControllerState LongitudinalPlanSP::Reader::getVisionTurnControllerState() const {

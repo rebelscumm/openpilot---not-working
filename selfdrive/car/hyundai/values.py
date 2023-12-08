@@ -73,13 +73,16 @@ class HyundaiFlagsSP(IntFlag):
   SP_CAN_LFA_BTN = 2
   SP_NAV_MSG = 4
   SP_CAMERA_SCC_LEAD = 8
-  SP_UPSTREAM_TACO = 16
+  SP_LKAS12 = 16
+  SP_RADAR_TRACKS = 32
+  SP_UPSTREAM_TACO = 64
 
 
 class CAR(StrEnum):
   # Hyundai
   AZERA_6TH_GEN = "HYUNDAI AZERA 6TH GEN"
   AZERA_HEV_6TH_GEN = "HYUNDAI AZERA HYBRID 6TH GEN"
+  BAYON_1ST_GEN_NON_SCC = "HYUNDAI BAYON 1ST GEN NON-SCC"
   ELANTRA = "HYUNDAI ELANTRA 2017"
   ELANTRA_GT_I30 = "HYUNDAI I30 N LINE 2019 & GT 2018 DCT"
   ELANTRA_2021 = "HYUNDAI ELANTRA 2021"
@@ -236,7 +239,7 @@ CAR_INFO: Dict[str, Optional[Union[HyundaiCarInfo, List[HyundaiCarInfo]]]] = {
     HyundaiCarInfo("Hyundai Tucson 2022", car_parts=CarParts.common([CarHarness.hyundai_n])),
     HyundaiCarInfo("Hyundai Tucson 2023", "All", car_parts=CarParts.common([CarHarness.hyundai_n])),
   ],
-  CAR.TUCSON_HYBRID_4TH_GEN: HyundaiCarInfo("Hyundai Tucson Hybrid 2022-23", "All", car_parts=CarParts.common([CarHarness.hyundai_n])),
+  CAR.TUCSON_HYBRID_4TH_GEN: HyundaiCarInfo("Hyundai Tucson Hybrid 2022-24", "All", car_parts=CarParts.common([CarHarness.hyundai_n])),
   CAR.SANTA_CRUZ_1ST_GEN: HyundaiCarInfo("Hyundai Santa Cruz 2022-23", car_parts=CarParts.common([CarHarness.hyundai_n])),
   CAR.CUSTIN_1ST_GEN: HyundaiCarInfo("Hyundai Custin 2023", "All", car_parts=CarParts.common([CarHarness.hyundai_k])),
 
@@ -310,6 +313,7 @@ CAR_INFO: Dict[str, Optional[Union[HyundaiCarInfo, List[HyundaiCarInfo]]]] = {
   CAR.GENESIS_GV80: HyundaiCarInfo("Genesis GV80 2023", "All", car_parts=CarParts.common([CarHarness.hyundai_m])),
 
   # Non-SCC Cars
+  CAR.BAYON_1ST_GEN_NON_SCC: HyundaiCarInfo("Hyundai Bayon Non-SCC 2021", "No Smart Cruise Control (SCC)", car_parts=CarParts.common([CarHarness.hyundai_n])),
   CAR.ELANTRA_2022_NON_SCC: HyundaiCarInfo("Hyundai Elantra Non-SCC 2022", "No Smart Cruise Control (SCC)", car_parts=CarParts.common([CarHarness.hyundai_k])),
   CAR.KONA_NON_SCC: HyundaiCarInfo("Hyundai Kona Non-SCC 2019", "No Smart Cruise Control (SCC)", car_parts=CarParts.common([CarHarness.hyundai_b])),
   CAR.KIA_FORTE_2019_NON_SCC: HyundaiCarInfo("Kia Forte Non-SCC 2019", "No Smart Cruise Control (SCC)", car_parts=CarParts.common([CarHarness.hyundai_g])),
@@ -1813,6 +1817,12 @@ FW_VERSIONS = {
       b'\xf1\x816H6D1051\x00\x00\x00\x00\x00\x00\x00\x00',
     ],
   },
+  CAR.BAYON_1ST_GEN_NON_SCC: {
+    # TODO: Check working route for more FW
+    (Ecu.fwdCamera, 0x7c4, None): [
+      b'\xf1\x00BC3 LKA  AT EUR LHD 1.00 1.01 99211-Q0100 261'
+    ],
+  },
   CAR.ELANTRA: {
     (Ecu.fwdCamera, 0x7c4, None): [
       b'\xf1\x00ADP LKAS AT USA LHD 1.00 1.03 99211-F2000 X31',
@@ -2090,6 +2100,7 @@ FW_VERSIONS = {
       b'\xf1\x00NX4 FR_CMR AT USA LHD 1.00 1.01 99211-N9100 14A',
       b'\xf1\x00NX4 FR_CMR AT USA LHD 1.00 1.00 99211-N9250 14W',
       b'\xf1\x00NX4 FR_CMR AT EUR LHD 1.00 2.02 99211-N9000 14E',
+      b'\xf1\x00NX4 FR_CMR AT USA LHD 1.00 1.00 99211-N9260 14Y',
     ],
     (Ecu.fwdRadar, 0x7d0, None): [
       b'\xf1\x00NX4__               1.00 1.00 99110-N9100         ',
@@ -2261,15 +2272,16 @@ UNSUPPORTED_LONGITUDINAL_CAR = LEGACY_SAFETY_MODE_CAR | {CAR.KIA_NIRO_PHEV, CAR.
                                                          CAR.KIA_OPTIMA_H_G4_FL}
 
 NON_SCC_CAR = {CAR.KIA_FORTE_2021_NON_SCC, CAR.ELANTRA_2022_NON_SCC, CAR.KIA_FORTE_2019_NON_SCC, CAR.GENESIS_G70_2021_NON_SCC,
-               CAR.KIA_SELTOS_2023_NON_SCC, CAR.KONA_NON_SCC}
+               CAR.KIA_SELTOS_2023_NON_SCC, CAR.KONA_NON_SCC, CAR.BAYON_1ST_GEN_NON_SCC}
 NON_SCC_NO_FCA_CAR = {CAR.KIA_FORTE_2019_NON_SCC, }
-NON_SCC_RADAR_FCA_CAR = {CAR.GENESIS_G70_2021_NON_SCC, }
+NON_SCC_RADAR_FCA_CAR = {CAR.GENESIS_G70_2021_NON_SCC, CAR.BAYON_1ST_GEN_NON_SCC}
 
 # If 0x500 is present on bus 1 it probably has a Mando radar outputting radar points.
 # If no points are outputted by default it might be possible to turn it on using  selfdrive/debug/hyundai_enable_radar_points.py
 DBC = {
   CAR.AZERA_6TH_GEN: dbc_dict('hyundai_kia_generic', None),
   CAR.AZERA_HEV_6TH_GEN: dbc_dict('hyundai_kia_generic', None),
+  CAR.BAYON_1ST_GEN_NON_SCC: dbc_dict('hyundai_kia_generic', None),
   CAR.ELANTRA: dbc_dict('hyundai_kia_generic', None),
   CAR.ELANTRA_GT_I30: dbc_dict('hyundai_kia_generic', None),
   CAR.ELANTRA_2021: dbc_dict('hyundai_kia_generic', None),
@@ -2310,9 +2322,9 @@ DBC = {
   CAR.KONA_EV_2022: dbc_dict('hyundai_kia_generic', None),
   CAR.KONA_HEV: dbc_dict('hyundai_kia_generic', None),
   CAR.SANTA_FE: dbc_dict('hyundai_kia_generic', 'hyundai_kia_mando_front_radar_generated'),
-  CAR.SANTA_FE_2022: dbc_dict('hyundai_kia_generic', None),
-  CAR.SANTA_FE_HEV_2022: dbc_dict('hyundai_kia_generic', None),
-  CAR.SANTA_FE_PHEV_2022: dbc_dict('hyundai_kia_generic', None),
+  CAR.SANTA_FE_2022: dbc_dict('hyundai_kia_generic', 'hyundai_kia_mando_front_radar_generated'),
+  CAR.SANTA_FE_HEV_2022: dbc_dict('hyundai_kia_generic', 'hyundai_kia_mando_front_radar_generated'),
+  CAR.SANTA_FE_PHEV_2022: dbc_dict('hyundai_kia_generic', 'hyundai_kia_mando_front_radar_generated'),
   CAR.SONATA: dbc_dict('hyundai_kia_generic', 'hyundai_kia_mando_front_radar_generated'),
   CAR.SONATA_LF: dbc_dict('hyundai_kia_generic', None), # Has 0x5XX messages, but different format
   CAR.TUCSON: dbc_dict('hyundai_kia_generic', None),

@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import sys
 import os
 import time
 import pickle
@@ -17,12 +16,14 @@ from openpilot.common.numpy_fast import interp
 from openpilot.common.filter_simple import FirstOrderFilter
 from openpilot.common.realtime import config_realtime_process
 from openpilot.common.transformations.model import get_warp_matrix
+from openpilot.selfdrive import sentry
 from openpilot.selfdrive.modeld.runners import ModelRunner, Runtime
 from openpilot.selfdrive.modeld.parse_model_outputs import Parser
 from openpilot.selfdrive.modeld.fill_model_msg import fill_model_msg, fill_pose_msg, PublishState
 from openpilot.selfdrive.modeld.constants import ModelConstants
 from openpilot.selfdrive.modeld.models.commonmodel_pyx import ModelFrame, CLContext
 
+PROCESS_NAME = "selfdrive.modeld.modeld"
 SEND_RAW_PRED = os.getenv('SEND_RAW_PRED')
 
 MODEL_PATHS = {
@@ -30,6 +31,9 @@ MODEL_PATHS = {
   ModelRunner.ONNX: Path(__file__).parent / 'models/supercombo.onnx'}
 
 METADATA_PATH = Path(__file__).parent / 'models/supercombo_metadata.pkl'
+
+CUSTOM_MODEL_PATH = "/data/media/0/models"
+
 
 class FrameMeta:
   frame_id: int = 0
@@ -69,7 +73,15 @@ class ModelState:
     self.output = np.zeros(net_output_size, dtype=np.float32)
     self.parser = Parser()
 
-    self.model = ModelRunner(MODEL_PATHS, self.output, Runtime.GPU, False, context)
+    self.param_s = Params()
+
+    if self.param_s.get_bool("CustomDrivingModel"):
+      _model_name = self.param_s.get("DrivingModelText", encoding="utf8")
+      _model_paths = {
+        ModelRunner.THNEED: f"{CUSTOM_MODEL_PATH}/supercombo-{_model_name}.thneed"}
+    else:
+      _model_paths = MODEL_PATHS
+    self.model = ModelRunner(_model_paths, self.output, Runtime.GPU, False, context)
     self.model.addInput("input_imgs", None)
     self.model.addInput("big_input_imgs", None)
     for k,v in self.inputs.items():
@@ -113,8 +125,9 @@ class ModelState:
 
 
 def main():
-  cloudlog.bind(daemon="selfdrive.modeld.modeld")
-  setproctitle("selfdrive.modeld.modeld")
+  sentry.set_tag("daemon", PROCESS_NAME)
+  cloudlog.bind(daemon=PROCESS_NAME)
+  setproctitle(PROCESS_NAME)
   config_realtime_process(7, 54)
 
   cl_context = CLContext()
@@ -222,7 +235,7 @@ def main():
     # Enable/disable nav features
     timestamp_llk = sm["navModel"].locationMonoTime
     nav_valid = sm.valid["navModel"] # and (nanos_since_boot() - timestamp_llk < 1e9)
-    nav_enabled = nav_valid and params.get_bool("ExperimentalMode")
+    nav_enabled = nav_valid
 
     if not nav_enabled:
       nav_features[:] = 0
@@ -285,4 +298,7 @@ if __name__ == "__main__":
   try:
     main()
   except KeyboardInterrupt:
-    sys.exit()
+    cloudlog.warning(f"child {PROCESS_NAME} got SIGINT")
+  except Exception:
+    sentry.capture_exception()
+    raise

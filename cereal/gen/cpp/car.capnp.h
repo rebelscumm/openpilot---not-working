@@ -154,6 +154,9 @@ enum class EventName_baa8c5d505f727de: uint16_t {
   CONTROLS_MISMATCH_LONG,
   CRUISE_ENGAGE_BLOCKED,
   LANE_CHANGE_ROAD_EDGE,
+  SPEED_LIMIT_PRE_ACTIVE,
+  SPEED_LIMIT_CONFIRMED,
+  TORQUE_N_N_LOAD,
 };
 CAPNP_DECLARE_ENUM(EventName, baa8c5d505f727de);
 CAPNP_DECLARE_SCHEMA(9da4fa09e052903c);
@@ -236,6 +239,8 @@ enum class AudibleAlert_f5a5e26c954e339e: uint16_t {
   PROMPT_REPEAT,
   PROMPT_DISTRACTED,
   PROMPT_STARTING,
+  PROMPT_SINGLE_LOW,
+  PROMPT_SINGLE_HIGH,
 };
 CAPNP_DECLARE_ENUM(AudibleAlert, f5a5e26c954e339e);
 CAPNP_DECLARE_SCHEMA(8c69372490aaa9da);
@@ -637,7 +642,7 @@ struct CarParams::LateralTorqueTuning {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(80366e0e804ecc1d, 4, 0)
+    CAPNP_DECLARE_STRUCT_HEADER(80366e0e804ecc1d, 4, 1)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -3229,6 +3234,11 @@ public:
 
   inline float getLatAccelOffset() const;
 
+  inline bool hasNnModelName() const;
+  inline  ::capnp::Text::Reader getNnModelName() const;
+
+  inline bool getNnModelFuzzyMatch() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -3280,6 +3290,16 @@ public:
 
   inline float getLatAccelOffset();
   inline void setLatAccelOffset(float value);
+
+  inline bool hasNnModelName();
+  inline  ::capnp::Text::Builder getNnModelName();
+  inline void setNnModelName( ::capnp::Text::Reader value);
+  inline  ::capnp::Text::Builder initNnModelName(unsigned int size);
+  inline void adoptNnModelName(::capnp::Orphan< ::capnp::Text>&& value);
+  inline ::capnp::Orphan< ::capnp::Text> disownNnModelName();
+
+  inline bool getNnModelFuzzyMatch();
+  inline void setNnModelFuzzyMatch(bool value);
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -8122,6 +8142,54 @@ inline float CarParams::LateralTorqueTuning::Builder::getLatAccelOffset() {
 inline void CarParams::LateralTorqueTuning::Builder::setLatAccelOffset(float value) {
   _builder.setDataField<float>(
       ::capnp::bounded<7>() * ::capnp::ELEMENTS, value);
+}
+
+inline bool CarParams::LateralTorqueTuning::Reader::hasNnModelName() const {
+  return !_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline bool CarParams::LateralTorqueTuning::Builder::hasNnModelName() {
+  return !_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS).isNull();
+}
+inline  ::capnp::Text::Reader CarParams::LateralTorqueTuning::Reader::getNnModelName() const {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_reader.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline  ::capnp::Text::Builder CarParams::LateralTorqueTuning::Builder::getNnModelName() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::get(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+inline void CarParams::LateralTorqueTuning::Builder::setNnModelName( ::capnp::Text::Reader value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::set(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), value);
+}
+inline  ::capnp::Text::Builder CarParams::LateralTorqueTuning::Builder::initNnModelName(unsigned int size) {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::init(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), size);
+}
+inline void CarParams::LateralTorqueTuning::Builder::adoptNnModelName(
+    ::capnp::Orphan< ::capnp::Text>&& value) {
+  ::capnp::_::PointerHelpers< ::capnp::Text>::adopt(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS), kj::mv(value));
+}
+inline ::capnp::Orphan< ::capnp::Text> CarParams::LateralTorqueTuning::Builder::disownNnModelName() {
+  return ::capnp::_::PointerHelpers< ::capnp::Text>::disown(_builder.getPointerField(
+      ::capnp::bounded<0>() * ::capnp::POINTERS));
+}
+
+inline bool CarParams::LateralTorqueTuning::Reader::getNnModelFuzzyMatch() const {
+  return _reader.getDataField<bool>(
+      ::capnp::bounded<1>() * ::capnp::ELEMENTS);
+}
+
+inline bool CarParams::LateralTorqueTuning::Builder::getNnModelFuzzyMatch() {
+  return _builder.getDataField<bool>(
+      ::capnp::bounded<1>() * ::capnp::ELEMENTS);
+}
+inline void CarParams::LateralTorqueTuning::Builder::setNnModelFuzzyMatch(bool value) {
+  _builder.setDataField<bool>(
+      ::capnp::bounded<1>() * ::capnp::ELEMENTS, value);
 }
 
 inline bool CarParams::LongitudinalPIDTuning::Reader::hasKpBP() const {

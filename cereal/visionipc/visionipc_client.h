@@ -17,7 +17,7 @@ private:
   Poller * poller;
 
   cl_device_id device_id = nullptr;
-  cl_context ctx = nullptr;\
+  cl_context ctx = nullptr;
 
 public:
   bool connected = false;

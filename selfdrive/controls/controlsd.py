@@ -142,6 +142,11 @@ class Controls:
       safety_config.safetyModel = car.CarParams.SafetyModel.noOutput
       self.CP.safetyConfigs = [safety_config]
 
+    # Write previous route's CarParams
+    prev_cp = self.params.get("CarParamsPersistent")
+    if prev_cp is not None:
+      self.params.put("CarParamsPrevRoute", prev_cp)
+
     # Write CarParams for radard
     cp_bytes = self.CP.to_bytes()
     self.params.put("CarParams", cp_bytes)
@@ -195,6 +200,8 @@ class Controls:
     self.experimental_mode = False
     self.v_cruise_helper = VCruiseHelper(self.CP)
     self.recalibrating_seen = False
+    self.nn_alert_shown = False
+    self.enable_nnff = self.params.get_bool("NNFF")
 
     self.lane_change_set_timer = int(self.params.get("AutoLaneChangeTimer", encoding="utf8"))
     self.reverse_acc_change = False
@@ -202,6 +209,7 @@ class Controls:
 
     self.live_torque = self.params.get_bool("LiveTorque")
     self.torqued_override = self.params.get_bool("TorquedOverride")
+    self.custom_stock_planner_speed = self.params.get_bool("CustomStockLongPlanner")
 
     self.process_not_running = False
 
@@ -257,6 +265,12 @@ class Controls:
     # no more events while in dashcam mode
     if self.read_only:
       return
+
+    # show alert to indicate whether NNFF is loaded
+    if self.enable_nnff and not self.nn_alert_shown and self.sm.frame % 1000 == 0 and \
+            self.CP.lateralTuning.which() == 'torque':
+      self.nn_alert_shown = True
+      self.events.add(EventName.torqueNNLoad)
 
     # Block resume if cruise never previously enabled
     resume_pressed = any(be.type in (ButtonType.accelCruise, ButtonType.resumeCruise) for be in CS.buttonEvents)
@@ -328,17 +342,14 @@ class Controls:
       self.events.add(EventName.laneChangeRoadEdge)
     elif self.sm['lateralPlan'].laneChangeState == LaneChangeState.preLaneChange:
       direction = self.sm['lateralPlan'].laneChangeDirection
-      lc_prev = self.sm['lateralPlanSP'].laneChangePrev
       if (CS.leftBlindspot and direction == LaneChangeDirection.left) or \
          (CS.rightBlindspot and direction == LaneChangeDirection.right):
         self.events.add(EventName.laneChangeBlocked)
       else:
         if direction == LaneChangeDirection.left:
-          self.events.add(EventName.preLaneChangeLeft) if self.lane_change_set_timer == 0 or lc_prev else \
-            self.events.add(EventName.laneChange)
+          self.events.add(EventName.preLaneChangeLeft)
         else:
-          self.events.add(EventName.preLaneChangeRight) if self.lane_change_set_timer == 0 or lc_prev else \
-            self.events.add(EventName.laneChange)
+          self.events.add(EventName.preLaneChangeRight)
     elif self.sm['lateralPlan'].laneChangeState in (LaneChangeState.laneChangeStarting,
                                                     LaneChangeState.laneChangeFinishing):
       self.events.add(EventName.laneChange)
@@ -518,7 +529,7 @@ class Controls:
   def state_transition(self, CS):
     """Compute conditional state transitions and execute actions on state transitions"""
 
-    self.v_cruise_helper.update_v_cruise(CS, self.enabled_long, self.is_metric, self.reverse_acc_change)
+    self.v_cruise_helper.update_v_cruise(CS, self.enabled_long, self.is_metric, self.reverse_acc_change, self.sm['longitudinalPlanSP'])
 
     # decrement the soft disable timer at every step, as it's reset on
     # entrance in SOFT_DISABLING state
@@ -674,16 +685,24 @@ class Controls:
                                                                                        lat_plan.curvatureRates)
       actuators.steer, actuators.steeringAngleDeg, lac_log = self.LaC.update(CC.latActive, CS, self.VM, lp,
                                                                              self.last_actuators, self.steer_limited, self.desired_curvature,
-                                                                             self.desired_curvature_rate, self.sm['liveLocationKalman'])
+                                                                             self.desired_curvature_rate, self.sm['liveLocationKalman'],
+                                                                             lat_plan=lat_plan, model_data=self.sm['modelV2'])
       actuators.curvature = self.desired_curvature
     else:
       lac_log = log.ControlsState.LateralDebugState.new_message()
       if self.sm.rcv_frame['testJoystick'] > 0:
+        # reset joystick if it hasn't been received in a while
+        should_reset_joystick = (self.sm.frame - self.sm.rcv_frame['testJoystick'])*DT_CTRL > 0.2
+        if not should_reset_joystick:
+          joystick_axes = self.sm['testJoystick'].axes
+        else:
+          joystick_axes = [0.0, 0.0]
+
         if CC.longActive:
-          actuators.accel = 4.0*clip(self.sm['testJoystick'].axes[0], -1, 1)
+          actuators.accel = 4.0*clip(joystick_axes[0], -1, 1)
 
         if CC.latActive:
-          steer = clip(self.sm['testJoystick'].axes[1], -1, 1)
+          steer = clip(joystick_axes[1], -1, 1)
           # max angle is 45 for angle-based cars, max curvature is 0.02
           actuators.steer, actuators.steeringAngleDeg, actuators.curvature = steer, steer * 45., steer * -0.02
 
@@ -871,6 +890,9 @@ class Controls:
 
     controlsStateSP.lateralState = lat_tuning
 
+    if self.enable_nnff and lat_tuning == 'torque':
+      controlsStateSP.lateralControlState.torqueState = self.LaC.pid_long_sp
+
     self.pm.send('controlsStateSP', dat_sp)
 
     # carState
@@ -908,7 +930,8 @@ class Controls:
     self.prof.checkpoint("Ratekeeper", ignore=True)
 
     self.is_metric = self.params.get_bool("IsMetric")
-    self.experimental_mode = self.params.get_bool("ExperimentalMode") and self.CP.openpilotLongitudinalControl
+    self.experimental_mode = self.params.get_bool("ExperimentalMode") and (self.CP.openpilotLongitudinalControl or
+                                                                           (not self.CP.pcmCruiseSpeed and self.custom_stock_planner_speed))
 
     self.lane_change_set_timer = int(self.params.get("AutoLaneChangeTimer", encoding="utf8"))
     self.reverse_acc_change = self.params.get_bool("ReverseAccChange")
@@ -916,6 +939,7 @@ class Controls:
 
     if self.sm.frame % int(2.5 / DT_CTRL) == 0:
       self.live_torque = self.params.get_bool("LiveTorque")
+      self.custom_stock_planner_speed = self.params.get_bool("CustomStockLongPlanner")
 
     # Sample data from sockets and get a carState
     CS = self.data_sample()

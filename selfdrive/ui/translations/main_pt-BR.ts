@@ -136,10 +136,6 @@ Please use caution when using this feature. Only use the blinker when traffic an
         <source>Auto</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Brightness Control (Global, %)</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>CameraOffset</name>
@@ -153,33 +149,6 @@ Please use caution when using this feature. Only use the blinker when traffic an
     </message>
     <message>
         <source> cm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Camera Offset - Laneful Only (cm)</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ChevronInfo</name>
-    <message>
-        <source>Display Metrics above Chevron</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display useful metrics above the chevron that tracks the lead car (only applicable to cars with openpilot longitudinal control).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OFF</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Distance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Speed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -241,25 +210,6 @@ Please use caution when using this feature. Only use the blinker when traffic an
     <message>
         <source>work</source>
         <translation>trabalho</translation>
-    </message>
-</context>
-<context>
-    <name>DevUiInfo</name>
-    <message>
-        <source>Developer UI List</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select the number of lists of real-time parameters you would like to display on the sunnypilot screen while driving.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>5 Metrics</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>10 Metrics</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -541,6 +491,14 @@ Please use caution when using this feature. Only use the blinker when traffic an
         <translation type="unfinished">Voltar</translation>
     </message>
     <message>
+        <source>Pause Lateral Below Speed w/ Blinker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable this toggle to pause lateral actuation with blinker when traveling below 20 MPH or 32 km/h.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Auto Lane Change: Delay with Blind Spot</source>
         <translation type="unfinished"></translation>
     </message>
@@ -659,10 +617,6 @@ Please use caution when using this feature. Only use the blinker when traffic an
         <source>Immediate</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>h</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>MonitoringPanel</name>
@@ -761,6 +715,12 @@ Please use caution when using this feature. Only use the blinker when traffic an
         <source>Device temperature too high. System cooling down before starting. Current internal component temperature: %1</source>
         <translation>Temperatura do dispositivo muito alta. O sistema está sendo resfriado antes de iniciar. A temperatura atual do componente interno é: %1</translation>
     </message>
+    <message>
+        <source>OpenStreetMap data is out of date. New maps must be downloaded if you wish to continue using Speed Limit and Road Name data.
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OffroadHome</name>
@@ -829,32 +789,31 @@ Please use caution when using this feature. Only use the blinker when traffic an
 <context>
     <name>OsmPanel</name>
     <message>
-        <source>Use Offline Database</source>
+        <source>Offline Maps ETA</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Database updates can be downloaded while the car is off.</source>
+        <source>Time Elapsed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>OpenStreetMap Database Update</source>
+        <source>Downloaded Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>CHECK</source>
-        <translation type="unfinished">VERIFICAR</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to reboot and perform a database update?
-Estimated time: 30-90 minutes</source>
+        <source>Delete Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reboot</source>
-        <translation type="unfinished">Reiniciar</translation>
+        <source>OpenStreetMap DB Update</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>OpenStreetMap Database</source>
+        <source>Force Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select your country</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -862,11 +821,25 @@ Estimated time: 30-90 minutes</source>
         <translation type="unfinished">SELECIONE</translation>
     </message>
     <message>
-        <source>Select your location</source>
+        <source>Select your state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Are you sure you want to reboot to start downloading the selected database? Estimated time: 30-90 minutes</source>
+        <source>
+
+Warning: You are on a metered connection!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will start the download process and it might take a while to complete.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Continue on Metered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start Download</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -912,10 +885,6 @@ Estimated time: 30-90 minutes</source>
     </message>
     <message>
         <source> cm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Path Offset (cm)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1063,293 +1032,15 @@ Isso pode levar até um minuto.</translation>
     </message>
 </context>
 <context>
-    <name>SPControlsPanel</name>
-    <message>
-        <source>Enable M.A.D.S.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable the beloved M.A.D.S. feature. Disable toggle to revert back to stock openpilot engagement/disengagement.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disengage ALC On Brake Pedal ℹ</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Define brake pedal interactions with sunnypilot when M.A.D.S. is enabled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enabled: Pressing the brake pedal will disengage Automatic Lane Centering (ALC) on sunnypilot.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disabled: Pressing the brake pedal will &lt;b&gt;NOT&lt;/b&gt; disengage Automatic Lane Centering (ALC) on sunnypilot.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable ACC+MADS with RES+/SET-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Engage both M.A.D.S. and ACC with a single press of RES+ or SET- button.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Note: Once M.A.D.S. is engaged via this mode, it will remain engaged until it is manually disabled via the M.A.D.S. button or car shut off.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle M.A.D.S. with Cruise Main</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Allows M.A.D.S. engagement/disengagement with &quot;Cruise Main&quot; cruise control button from the steering wheel.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pause Lateral Below Speed w/ Blinker</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable this toggle to pause lateral actuation with blinker when traveling below 30 MPH or 50 KM/H.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block Lane Change: Road Edge Detection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable this toggle to block lane change when road edge is detected on the stalk actuated side.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Laneless for Curves in &quot;Auto lane&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>While in Auto Lane, switch to Laneless for current/future curves.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable Dynamic Experimental Control</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable toggle to allow the model to determine when to use openpilot ACC or openpilot End to End Longitudinal.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Custom Offsets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add custom offsets to Camera and Path in sunnypilot.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto Lane Change: Delay with Blind Spot</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle to enable a delay timer for seamless lane changes when blind spot monitoring (BSM) detects a obstructing vehicle, ensuring safe maneuvering.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enforce Torque Lateral Control</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable this to enforce sunnypilot to steer with Torque lateral control.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable Self-Tune</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enables self-tune for Torque lateral control for platforms that do not use Torque lateral control by default.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Less Restrict Settings for Self-Tune (Beta)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Less strict settings when using Self-Tune. This allows torqued to be more forgiving when learning values.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable Custom Tuning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enables custom tuning for Torque lateral control. Modifying FRICTION and LAT_ACCEL_FACTOR below will override the offline values indicated in the YAML files within &quot;selfdrive/torque_data&quot;. The values will also be used live when &quot;Override Self-Tune&quot; toggle is enabled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Manual Real-Time Tuning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enforces the torque lateral controller to use the fixed values instead of the learned values from Self-Tune. Enabling this toggle overrides Self-Tune values.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable Hands on Wheel Monitoring</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Monitor and alert when driver is not keeping the hands on the steering wheel.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable Vision Based Turn Speed Control (V-TSC)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Use vision path predictions to estimate the appropriate speed to drive through turns ahead.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable Speed Limit Control (SLC)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Use speed limit signs information from map data and car interface (if applicable) to automatically adapt cruise speed to road limits.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable Speed Limit Offset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set speed limit slightly higher than actual speed limit for a more natural drive.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable Map Data Turn Speed Control (M-TSC)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Use curvature information from map data to define speed limits to take turns ahead.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ACC +/-: Long Press Reverse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change the ACC +/- buttons behavior with cruise speed change in sunnypilot.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disabled (Stock): Short=1, Long = 5 (imperial) / 10 (metric)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enabled: Short = 5 (imperial) / 10 (metric), Long=1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OSM: Use Offline Database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Laneful</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Laneless</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SPGeneralPanel</name>
-    <message>
-        <source>Quiet Drive 🤫</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sunnypilot will display alerts but only play the most important warning sounds. This feature can be toggled while the car is on.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Green Traffic Light Chime (Beta)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A chime will play when the traffic light you are waiting for turns green and you have no vehicle in front of you. If you are waiting behind another vehicle, the chime will play once the vehicle advances unless ACC is engaged.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Note: This chime is only designed as a notification. It is the driver&apos;s responsibility to observe their environment and make decisions accordingly.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lead Vehicle Departure Alert</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable this will notify when the leading vehicle drives away.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Retain hotspot/tethering state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enabling this toggle will retain the hotspot/tethering toggle state across reboots.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Driving Screen Off: Non-Critical Events</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>When &lt;b&gt;Driving Screen Off Timer&lt;/b&gt; is not set to &lt;b&gt;&quot;Always On&quot;&lt;/b&gt;:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enabled: Wake the brightness of the screen to display all events.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disabled: Wake the brightness of the screen to display critical events.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable Screen Recorder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable this will display a button on the onroad screen to toggle on or off real-time screen recording with UI elements.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disable Onroad Uploads</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disable uploads completely when onroad. Necessary to avoid high data usage when connected to Wi-Fi hotspot. Turn on this feature if you are looking to utilize map-based features, such as Speed Limit Control (SLC) and Map-based Turn Speed Control (MTSC).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Debug snapshot on screen center tap</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stores snapshot file with current state of some modules.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>SPVehiclesTogglesPanel</name>
+    <message>
+        <source>Chrysler/Ram/Jeep</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RAM HD: Steer to 0 (Hardware Required)</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Hyundai/Kia/Genesis</source>
         <translation type="unfinished"></translation>
@@ -1382,107 +1073,16 @@ Isso pode levar até um minuto.</translation>
         <source>Note: Enabling this toggle may have unexpected behavior with steering control. It is the driver&apos;s responsibility to observe their environment and make decisions accordingly.</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>SPVisualsPanel</name>
     <message>
-        <source>Display Braking Status</source>
+        <source>Volkswagen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enable this will turn the current speed value to red while the brake is used.</source>
+        <source>Enable CC Only support</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Display Stand Still Timer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable this will display time spent at a stop (i.e., at a stop lights, stop signs, traffic congestions).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show Developer UI</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show developer UI (Dev UI) for real-time parameters from various sources.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto-Hide UI Buttons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hide UI buttons on driving screen after a 30-second timeout. Tap on the screen at anytime to reveal the UI buttons.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display DM Camera in Reverse Gear</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show Driver Monitoring camera while the car is in reverse gear.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OSM: Show debug UI elements</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OSM: Show UI elements that aid debugging.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Speedometer: Display True Speed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display the true vehicle current speed from wheel speed sensors.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Speedometer: Hide from Onroad Screen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display End-to-end Longitudinal Status (Beta)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable this will display an icon that appears when the End-to-end model decides to start or stop.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Map: Display 3D Buildings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Parse and display 3D buildings on map. Thanks to jakethesnake420 for this implementation.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Off</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ambient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>RAM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>CPU</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>GPU</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Max</source>
+        <source>sunnypilot supports Volkswagen MQB CC only platforms with this toggle enabled. Only enable this toggle if your car does not have ACC from the factory.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1494,70 +1094,46 @@ Isso pode levar até um minuto.</translation>
     </message>
     <message>
         <source>Device</source>
-        <translation type="vanished">Dispositivo</translation>
+        <translation>Dispositivo</translation>
     </message>
     <message>
         <source>Network</source>
-        <translation type="vanished">Rede</translation>
+        <translation>Rede</translation>
     </message>
     <message>
         <source>Toggles</source>
-        <translation type="vanished">Ajustes</translation>
+        <translation>Ajustes</translation>
     </message>
     <message>
         <source>Software</source>
-        <translation type="vanished">Software</translation>
+        <translation>Software</translation>
     </message>
     <message>
-        <source>   Device</source>
+        <source>sunnypilot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>   Network</source>
+        <source>OSM</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>   Toggles</source>
+        <source>Monitoring</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>   Software</source>
+        <source>Visuals</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>   sunnypilot</source>
+        <source>Display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>   OSM</source>
+        <source>Trips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>   Monitoring</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>   Visuals</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>   Display</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>   Trips</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>   Vehicle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>  Network</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>  sunnypilot</source>
+        <source>Vehicle</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1743,6 +1319,123 @@ Isso pode levar até um minuto.</translation>
     </message>
 </context>
 <context>
+    <name>SlcSettings</name>
+    <message>
+        <source>Warning Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User Confirm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Engage Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fixed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Percentage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set speed limit slightly higher than actual speed limit for a more natural drive.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source Policy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nav
+Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Map
+Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Car
+Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nav
+First</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Map
+First</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Car
+First</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the precedence order of sources used to adapt cruise speed to road limits:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nav Only: Data from Mapbox active navigation only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Map Only: Data from OpenStreetMap only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Car Only: Data from the car&apos;s built-in sources (if available).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nav First: Nav -&gt; Map -&gt; Car</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Map First: Map -&gt; Nav -&gt; Car</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Car First: Car -&gt; Nav -&gt; Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the desired mode to set the cruising speed to the speed limit:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning Only: Warn the driver when the vehicle is driven faster than the speed limit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto: Automatic speed adjustment on motorways based on speed limit data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User Confirm: Inform the driver to change set speed of Adaptive Cruise Control to help the driver stay within the speed limit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SoftwarePanel</name>
     <message>
         <source>Updates are only downloaded while the car is off.</source>
@@ -1817,34 +1510,35 @@ Isso pode levar até um minuto.</translation>
         <translation>nunca</translation>
     </message>
     <message>
-        <source>Current Driving Model</source>
+        <source>Driving Model</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>SpeedLimitOffsetType</name>
+    <name>SoftwarePanelSP</name>
     <message>
-        <source>Speed Limit Offset Type</source>
+        <source>Driving Model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Set speed limit higher or lower than actual speed limit for a more personalized drive.</source>
+        <source>SELECT</source>
+        <translation type="unfinished">SELECIONE</translation>
+    </message>
+    <message>
+        <source>Select a Driving Model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>To use this feature, turn off &quot;Enable Speed Limit % Offset&quot;.</source>
+        <source>Download has started in the background.
+We STRONGLY suggest you to reset calibration, would you like to do that now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Default</source>
-        <translation type="unfinished"></translation>
+        <source>Reset Calibration</source>
+        <translation type="unfinished">Reinicializar Calibragem</translation>
     </message>
     <message>
-        <source>Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%</source>
+        <source>Warning: You are on a metered connection!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1913,51 +1607,11 @@ Isso pode levar até um minuto.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Custom Offsets</source>
+        <source>Enable Speed Limit Control (SLC)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add custom offsets to Camera and Path in sunnypilot.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enforce Torque Lateral Control</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable this to enforce sunnypilot to steer with Torque lateral control.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable Self-Tune</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enables self-tune for Torque lateral control for platforms that do not use Torque lateral control by default.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Less Restrict Settings for Self-Tune (Beta)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Less strict settings when using Self-Tune. This allows torqued to be more forgiving when learning values.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable Custom Tuning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enables custom tuning for Torque lateral control. Modifying FRICTION and LAT_ACCEL_FACTOR below will override the offline values indicated in the YAML files within &quot;selfdrive/torque_data&quot;. The values will also be used live when &quot;Override Self-Tune&quot; toggle is enabled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Manual Real-Time Tuning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enforces the torque lateral controller to use the fixed values instead of the learned values from Self-Tune. Enabling this toggle overrides Self-Tune values.</source>
+        <source>When you engage ACC, you will be prompted to set the cruising speed to the speed limit of the road adjusted by the Offset and Source Policy specified, or the current driving speed. The maximum cruising speed will always be the MAX set speed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1990,6 +1644,58 @@ Isso pode levar até um minuto.</translation>
     </message>
     <message>
         <source>Enabled: Short = 5 (imperial) / 10 (metric), Long=1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom Offsets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add custom offsets to Camera and Path in sunnypilot.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enforce Torque Lateral Control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable this to enforce sunnypilot to steer with Torque lateral control.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Neural Network Lateral Control (NNLC)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable Self-Tune</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enables self-tune for Torque lateral control for platforms that do not use Torque lateral control by default.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Less Restrict Settings for Self-Tune (Beta)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Less strict settings when using Self-Tune. This allows torqued to be more forgiving when learning values.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable Custom Tuning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enables custom tuning for Torque lateral control. Modifying FRICTION and LAT_ACCEL_FACTOR below will override the offline values indicated in the YAML files within &quot;selfdrive/torque_data&quot;. The values will also be used live when &quot;Override Self-Tune&quot; toggle is enabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manual Real-Time Tuning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enforces the torque lateral controller to use the fixed values instead of the learned values from Self-Tune. Enabling this toggle overrides Self-Tune values.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2033,6 +1739,10 @@ Isso pode levar até um minuto.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Customize Speed Limit Control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Laneful</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2045,23 +1755,19 @@ Isso pode levar até um minuto.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Disabled</source>
+        <source>NNLC is currently not available on this platform.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enabled</source>
+        <source>([Match = Exact] is ideal, but [Match = Fuzzy] is fine too. Contact @twilsonco in the sunnypilot Discord server if there are any issues.)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Default</source>
+        <source>Formerly known as &lt;b&gt;&quot;NNFF&quot;&lt;/b&gt;, this replaces the lateral &lt;b&gt;&quot;torque&quot;&lt;/b&gt; controller with one using a neural network trained on each car&apos;s (actually, each separate EPS firmware) driving data for increased controls accuracy.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Fixed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Percentage</source>
+        <source>Contact @twilsonco in the sunnypilot Discord server with feedback, or to provide log data for your car if your car is currently unsupported.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2237,6 +1943,10 @@ Isso pode levar até um minuto.</translation>
     <message>
         <source>When enabled, sunnypilot will attempt to control stock longitudinal control with ACC button presses.
 This feature must be used along with SLC, and/or V-TSC, and/or M-TSC.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Planner Speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -18,13 +18,13 @@ LaneChangeState = log.LateralPlan.LaneChangeState
 
 PATH_COST = 1.0
 LATERAL_MOTION_COST = 0.11
-LATERAL_ACCEL_COST = 1.0
+LATERAL_ACCEL_COST = 0.0
 LATERAL_JERK_COST = 0.04
 # Extreme steering rate is unpleasant, even
 # when it does not cause bad jerk.
 # TODO this cost should be lowered when low
 # speed lateral control is stable on all cars
-STEERING_RATE_COST = 8.0
+STEERING_RATE_COST = 700.0
 
 
 class LateralPlanner:
@@ -46,11 +46,11 @@ class LateralPlanner:
     self.t_idxs = np.arange(TRAJECTORY_SIZE)
     self.y_pts = np.zeros((TRAJECTORY_SIZE,))
     self.v_plan = np.zeros((TRAJECTORY_SIZE,))
+    self.x_sol = np.zeros((TRAJECTORY_SIZE, 4), dtype=np.float32)
     self.v_ego = MIN_SPEED
     self.l_lane_change_prob = 0.0
     self.r_lane_change_prob = 0.0
     self.d_path_w_lines_xyz = np.zeros((TRAJECTORY_SIZE, 3))
-    self.x_sol = np.zeros((TRAJECTORY_SIZE, 4), dtype=np.float32)
 
     self.debug_mode = debug
 
@@ -59,7 +59,7 @@ class LateralPlanner:
 
     self.param_s = Params()
     self.dynamic_lane_profile = int(self.param_s.get("DynamicLaneProfile", encoding="utf8"))
-    self.dynamic_lane_profile_status = False
+    self.dynamic_lane_profile_status = True
     self.dynamic_lane_profile_status_buffer = False
 
     self.standstill_elapsed = 0.0
@@ -125,7 +125,7 @@ class LateralPlanner:
       self.path_xyz[:, 1] += self.LP.path_offset
       self.dynamic_lane_profile_status = True
 
-    if self.dynamic_lane_profile_status:
+    if not self.dynamic_lane_profile_status:
       self.lat_mpc.set_weights(PATH_COST, LATERAL_MOTION_COST,
                                LATERAL_ACCEL_COST, LATERAL_JERK_COST,
                                STEERING_RATE_COST)
@@ -197,17 +197,17 @@ class LateralPlanner:
 
     lateralPlan = plan_send.lateralPlan
     lateralPlan.modelMonoTime = sm.logMonoTime['modelV2']
-    lateralPlan.dPathPoints = self.y_pts.tolist() if self.dynamic_lane_profile_status else self.path_xyz[:,1].tolist()
-    lateralPlan.psis = self.lat_mpc.x_sol[0:CONTROL_N, 2].tolist() if self.dynamic_lane_profile_status else self.x_sol[0:CONTROL_N, 2].tolist()
+    lateralPlan.dPathPoints = self.path_xyz[:,1].tolist() if self.dynamic_lane_profile_status else self.y_pts.tolist()
+    lateralPlan.psis = self.x_sol[0:CONTROL_N, 2].tolist() if self.dynamic_lane_profile_status else self.lat_mpc.x_sol[0:CONTROL_N, 2].tolist()
 
-    lateralPlan.curvatures = (self.lat_mpc.x_sol[0:CONTROL_N, 3]/self.v_ego).tolist() if self.dynamic_lane_profile_status else (self.x_sol[0:CONTROL_N, 3]/self.v_ego).tolist()
-    lateralPlan.curvatureRates = [float(x.item() / self.v_ego) for x in self.lat_mpc.u_sol[0:CONTROL_N - 1]] + [0.0] if self.dynamic_lane_profile_status else [float(0) for _ in range(CONTROL_N-1)] # TODO: unused
+    lateralPlan.curvatures = (self.x_sol[0:CONTROL_N, 3]/self.v_ego).tolist() if self.dynamic_lane_profile_status else (self.lat_mpc.x_sol[0:CONTROL_N, 3]/self.v_ego).tolist()
+    lateralPlan.curvatureRates = [float(0) for _ in range(CONTROL_N-1)] if self.dynamic_lane_profile_status else [float(x.item() / self.v_ego) for x in self.lat_mpc.u_sol[0:CONTROL_N - 1]] + [0.0] # TODO: unused
 
-    lateralPlan.mpcSolutionValid = bool(plan_solution_valid) if self.dynamic_lane_profile_status else bool(1)
-    lateralPlan.solverExecutionTime = self.lat_mpc.solve_time if self.dynamic_lane_profile_status else 0.0
+    lateralPlan.mpcSolutionValid = bool(1) if self.dynamic_lane_profile_status else bool(plan_solution_valid)
+    lateralPlan.solverExecutionTime = 0.0 if self.dynamic_lane_profile_status else self.lat_mpc.solve_time
     if self.debug_mode:
-      lateralPlan.solverState.x = self.lat_mpc.x_sol.tolist() if self.dynamic_lane_profile_status else self.x_sol.tolist()
-      if self.dynamic_lane_profile_status:
+      lateralPlan.solverState.x = self.x_sol.tolist() if self.dynamic_lane_profile_status else self.lat_mpc.x_sol.tolist()
+      if not self.dynamic_lane_profile_status:
         lateralPlan.solverCost = self.lat_mpc.cost
         lateralPlan.solverState = log.LateralPlan.SolverState.new_message()
         lateralPlan.solverState.u = self.lat_mpc.u_sol.flatten().tolist()

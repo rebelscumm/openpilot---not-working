@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from cereal import car
 from panda import Panda
+from openpilot.common.params import Params
 from openpilot.selfdrive.car import get_safety_config, create_mads_event
 from openpilot.selfdrive.car.chrysler.values import CAR, RAM_HD, RAM_DT, RAM_CARS, ChryslerFlags, ChryslerFlagsSP, BUTTON_STATES
 from openpilot.selfdrive.car.interfaces import CarInterfaceBase
@@ -28,7 +29,11 @@ class CarInterface(CarInterfaceBase):
     # safety config
     ret.safetyConfigs = [get_safety_config(car.CarParams.SafetyModel.chrysler)]
     if candidate in RAM_HD:
-      ret.safetyConfigs[0].safetyParam |= Panda.FLAG_CHRYSLER_RAM_HD
+      if Params().get_bool("RamHDS0"):
+        ret.spFlags |= ChryslerFlagsSP.SP_RAM_HD_S0.value
+        ret.safetyConfigs[0].safetyParam |= Panda.FLAG_CHRYSLER_RAM_HD_S0
+      else:
+        ret.safetyConfigs[0].safetyParam |= Panda.FLAG_CHRYSLER_RAM_HD
     elif candidate in RAM_DT:
       ret.safetyConfigs[0].safetyParam |= Panda.FLAG_CHRYSLER_RAM_DT
 
@@ -83,6 +88,8 @@ class CarInterface(CarInterfaceBase):
       ret.minSteerSpeed = 16
       CarInterfaceBase.configure_torque_tune(candidate, ret.lateralTuning, 1.0, False)
       ret.spFlags |= ChryslerFlagsSP.SP_RAM_HD_PARAMSD_IGNORE.value
+      if ret.spFlags & ChryslerFlagsSP.SP_RAM_HD_S0:
+        ret.minSteerSpeed = 0.5
 
     else:
       raise ValueError(f"Unsupported car: {candidate}")
@@ -94,10 +101,14 @@ class CarInterface(CarInterfaceBase):
     ret.centerToFront = ret.wheelbase * 0.44
     ret.enableBsm = 720 in fingerprint[0]
 
+    # Detect Whtie Panda mod, which bypasses EPS low speed lockout, allowing sunnypilot to send steering commands down to 0
+    if 0x2AA in fingerprint[0]:
+      ret.minSteerSpeed = -0.1
+
     return ret
 
   def _update(self, c):
-    ret = self.CS.update(self.cp, self.cp_cam)
+    ret = self.CS.update(self.cp, self.cp_cam, self.cp_eps)
     self.CS = self.sp_update_params(self.CS)
 
     buttonEvents = []
